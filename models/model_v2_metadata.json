@@ -1,0 +1,131 @@
+{
+  "model_name": "AutoGuard AI V2 Production Model",
+  "model_type": "LogisticRegression",
+  "model_family": "sklearn.linear_model.LogisticRegression",
+  "version": "v2.0.0",
+  "training_date": "2026-06-24",
+  "feature_list": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "ANNUAL_MILEAGE",
+    "VEHICLE_OWNERSHIP",
+    "VEHICLE_YEAR"
+  ],
+  "feature_order_post_preprocessing": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "VEHICLE_YEAR",
+    "ANNUAL_MILEAGE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "VEHICLE_OWNERSHIP"
+  ],
+  "target": "OUTCOME",
+  "excluded_features": [
+    "RACE",
+    "INCOME",
+    "CREDIT_SCORE",
+    "CITY_RISK_SCORE",
+    "REGION_RISK_SCORE"
+  ],
+  "preprocessing": {
+    "AGE": {
+      "type": "ordinal_encoding",
+      "order": [
+        "16-25",
+        "26-39",
+        "40-64",
+        "65+"
+      ]
+    },
+    "DRIVING_EXPERIENCE": {
+      "type": "ordinal_encoding",
+      "order": [
+        "0-9y",
+        "10-19y",
+        "20-29y",
+        "30y+"
+      ]
+    },
+    "VEHICLE_YEAR": {
+      "type": "binary_encoding",
+      "order": [
+        "before 2015",
+        "after 2015"
+      ]
+    },
+    "ANNUAL_MILEAGE": {
+      "type": "median_imputation",
+      "fit_on": "train_only"
+    },
+    "VEHICLE_OWNERSHIP": {
+      "type": "passthrough"
+    },
+    "PAST_ACCIDENTS": {
+      "type": "passthrough"
+    },
+    "SPEEDING_VIOLATIONS": {
+      "type": "passthrough"
+    },
+    "DUIS": {
+      "type": "passthrough"
+    },
+    "scaling": "StandardScaler (fit on train only)"
+  },
+  "training_rows": 8000,
+  "test_rows": 2000,
+  "hyperparameters": {
+    "max_iter": 1000,
+    "random_state": 42
+  },
+  "evaluation_metrics": {
+    "test_set": {
+      "accuracy": 0.809,
+      "precision": 0.6762589928057554,
+      "recall": 0.7496012759170654,
+      "f1": 0.7110438729198184,
+      "roc_auc": 0.8752170766584075,
+      "confusion_matrix": [
+        [
+          1148,
+          225
+        ],
+        [
+          157,
+          470
+        ]
+      ]
+    },
+    "cross_validation_5fold": {
+      "accuracy": {
+        "mean": 0.8242499999999999,
+        "std": 0.004927600836106762
+      },
+      "precision": {
+        "mean": 0.7069691447172197,
+        "std": 0.007514969589235865
+      },
+      "recall": {
+        "mean": 0.7497968207012269,
+        "std": 0.016346990854457413
+      },
+      "f1": {
+        "mean": 0.7276617130763174,
+        "std": 0.009239960911745141
+      },
+      "roc_auc": {
+        "mean": 0.8936031269670981,
+        "std": 0.002714982505294585
+      }
+    }
+  },
+  "dependencies": {
+    "python": "3.x",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.5.3"
+  }
+}

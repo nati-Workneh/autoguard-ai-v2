@@ -1,0 +1,337 @@
+{
+  "drop_features": [
+    "policy_id",
+    "max_torque",
+    "max_power",
+    "is_rear_window_washer",
+    "is_central_locking",
+    "is_ecw"
+  ],
+  "encoding_strategy": {
+    "frequency": [
+      "area_cluster",
+      "model",
+      "engine_type"
+    ],
+    "one_hot": [
+      "make",
+      "segment",
+      "fuel_type",
+      "rear_brakes_type",
+      "transmission_type",
+      "steering_type"
+    ]
+  },
+  "numeric_transform_strategy": {
+    "population_density": "log1p_then_standard_scale",
+    "power_to_weight": "standard_scale_only",
+    "torque_to_weight": "standard_scale_only",
+    "vehicle_volume_proxy": "standard_scale_only"
+  },
+  "frequency_maps": {
+    "area_cluster": {
+      "C8": 0.23318298183591368,
+      "C2": 0.12622211386078264,
+      "C5": 0.11829818359136901,
+      "C3": 0.10425454102157747,
+      "C14": 0.06178227477752042,
+      "C13": 0.0593685237108375,
+      "C10": 0.05341948067780081,
+      "C9": 0.04632451542118737,
+      "C7": 0.03686456174570279,
+      "C12": 0.02767280263318298,
+      "C1": 0.025088382299158843,
+      "C11": 0.020480312080945997,
+      "C19": 0.016749969523345117,
+      "C6": 0.01482384493477996,
+      "C15": 0.013117152261367792,
+      "C4": 0.010825307814214312,
+      "C17": 0.00828965012800195,
+      "C16": 0.006973058637083994,
+      "C21": 0.006582957454589785,
+      "C18": 0.0040229184444715346,
+      "C22": 0.0036328172619773252,
+      "C20": 0.0020236498841887116
+    },
+    "model": {
+      "M1": 0.25371205656467144,
+      "M4": 0.2395465073753505,
+      "M6": 0.23671827380226745,
+      "M8": 0.07160794831159333,
+      "M7": 0.04932341826161161,
+      "M3": 0.04059490430330367,
+      "M9": 0.03593807143727904,
+      "M5": 0.02706326953553578,
+      "M10": 0.020724125320004876,
+      "M2": 0.01852980616847495,
+      "M11": 0.006241618919907351
+    },
+    "engine_type": {
+      "F8D Petrol Engine": 0.25371205656467144,
+      "1.5 L U2 CRDi": 0.2395465073753505,
+      "K Series Dual jet": 0.23671827380226745,
+      "K10C": 0.07160794831159333,
+      "1.2 L K Series Engine": 0.04932341826161161,
+      "1.0 SCe": 0.04059490430330367,
+      "i-DTEC": 0.03593807143727904,
+      "1.5 Turbocharged Revotorq": 0.02706326953553578,
+      "G12B": 0.020724125320004876,
+      "1.2 L K12N Dualjet": 0.01852980616847495,
+      "1.5 Turbocharged Revotron": 0.006241618919907351
+    }
+  },
+  "one_hot_levels": {
+    "make": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "segment": [
+      "A",
+      "B1",
+      "B2",
+      "C1",
+      "C2",
+      "Utility"
+    ],
+    "fuel_type": [
+      "CNG",
+      "Diesel",
+      "Petrol"
+    ],
+    "rear_brakes_type": [
+      "Disc",
+      "Drum"
+    ],
+    "transmission_type": [
+      "Automatic",
+      "Manual"
+    ],
+    "steering_type": [
+      "Electric",
+      "Manual",
+      "Power"
+    ]
+  },
+  "scaler_params": {
+    "policy_tenure": {
+      "mean": 0.6104989371486542,
+      "std": 0.4140557275436571
+    },
+    "age_of_car": {
+      "mean": 0.06940777764232599,
+      "std": 0.056730483492784645
+    },
+    "age_of_policyholder": {
+      "mean": 0.46941550464651766,
+      "std": 0.1231694441712372
+    },
+    "population_density": {
+      "mean": 9.43271118518188,
+      "std": 0.9518467963275464
+    },
+    "airbags": {
+      "mean": 3.1347555772278435,
+      "std": 1.831680789911982
+    },
+    "displacement": {
+      "mean": 1162.807558210411,
+      "std": 265.96401058973066
+    },
+    "cylinder": {
+      "mean": 3.6278434719005244,
+      "std": 0.4833857090099757
+    },
+    "gear_box": {
+      "mean": 5.245788126295258,
+      "std": 0.4305587568473155
+    },
+    "turning_radius": {
+      "mean": 4.853162257710594,
+      "std": 0.2279977585193885
+    },
+    "length": {
+      "mean": 3850.9224186273314,
+      "std": 311.1802531134226
+    },
+    "width": {
+      "mean": 1672.4737535048152,
+      "std": 111.9833010046471
+    },
+    "height": {
+      "mean": 1553.5562599049128,
+      "std": 79.64875620867568
+    },
+    "gross_weight": {
+      "mean": 1385.5624527611849,
+      "std": 212.3608085997568
+    },
+    "ncap_rating": {
+      "mean": 1.763818115323662,
+      "std": 1.386486991105264
+    },
+    "torque_nm": {
+      "mean": 134.521972449104,
+      "std": 73.12362434250096
+    },
+    "torque_rpm": {
+      "mean": 3534.0753382908692,
+      "std": 726.2354059168783
+    },
+    "power_bhp": {
+      "mean": 79.03496452517372,
+      "std": 27.67362671002113
+    },
+    "power_rpm": {
+      "mean": 5306.985249299037,
+      "std": 916.5099344748646
+    },
+    "power_to_weight": {
+      "mean": 0.05605473789054457,
+      "std": 0.015687128893693954
+    },
+    "torque_to_weight": {
+      "mean": 0.09308511263728012,
+      "std": 0.040408520389280764
+    },
+    "vehicle_volume_proxy": {
+      "mean": 10091511288.094063,
+      "std": 1746725062.4713936
+    },
+    "safety_feature_count": {
+      "mean": 4.9650615628428625,
+      "std": 2.892521053012592
+    },
+    "parking_assist_score": {
+      "mean": 1.3495794221626234,
+      "std": 0.4768429443420943
+    },
+    "area_cluster__freq": {
+      "mean": 0.11166842576496924,
+      "std": 0.07625287264795474
+    },
+    "model__freq": {
+      "mean": 0.18983208852997513,
+      "std": 0.08911570467788982
+    },
+    "engine_type__freq": {
+      "mean": 0.18983208852997513,
+      "std": 0.08911570467788982
+    }
+  },
+  "scaled_columns": [
+    "policy_tenure",
+    "age_of_car",
+    "age_of_policyholder",
+    "population_density",
+    "airbags",
+    "displacement",
+    "cylinder",
+    "gear_box",
+    "turning_radius",
+    "length",
+    "width",
+    "height",
+    "gross_weight",
+    "ncap_rating",
+    "torque_nm",
+    "torque_rpm",
+    "power_bhp",
+    "power_rpm",
+    "power_to_weight",
+    "torque_to_weight",
+    "vehicle_volume_proxy",
+    "safety_feature_count",
+    "parking_assist_score",
+    "area_cluster__freq",
+    "model__freq",
+    "engine_type__freq"
+  ],
+  "binary_columns": [
+    "is_esc",
+    "is_adjustable_steering",
+    "is_tpms",
+    "is_parking_sensors",
+    "is_parking_camera",
+    "is_front_fog_lights",
+    "is_rear_window_wiper",
+    "is_rear_window_defogger",
+    "is_brake_assist",
+    "is_power_door_locks",
+    "is_power_steering",
+    "is_driver_seat_height_adjustable",
+    "is_day_night_rear_view_mirror",
+    "is_speed_alert"
+  ],
+  "final_feature_names": [
+    "policy_tenure",
+    "age_of_car",
+    "age_of_policyholder",
+    "population_density",
+    "airbags",
+    "displacement",
+    "cylinder",
+    "gear_box",
+    "turning_radius",
+    "length",
+    "width",
+    "height",
+    "gross_weight",
+    "ncap_rating",
+    "torque_nm",
+    "torque_rpm",
+    "power_bhp",
+    "power_rpm",
+    "power_to_weight",
+    "torque_to_weight",
+    "vehicle_volume_proxy",
+    "safety_feature_count",
+    "parking_assist_score",
+    "area_cluster__freq",
+    "model__freq",
+    "engine_type__freq",
+    "is_esc",
+    "is_adjustable_steering",
+    "is_tpms",
+    "is_parking_sensors",
+    "is_parking_camera",
+    "is_front_fog_lights",
+    "is_rear_window_wiper",
+    "is_rear_window_defogger",
+    "is_brake_assist",
+    "is_power_door_locks",
+    "is_power_steering",
+    "is_driver_seat_height_adjustable",
+    "is_day_night_rear_view_mirror",
+    "is_speed_alert",
+    "make__1",
+    "make__2",
+    "make__3",
+    "make__4",
+    "make__5",
+    "segment__A",
+    "segment__B1",
+    "segment__B2",
+    "segment__C1",
+    "segment__C2",
+    "segment__Utility",
+    "fuel_type__CNG",
+    "fuel_type__Diesel",
+    "fuel_type__Petrol",
+    "rear_brakes_type__Disc",
+    "rear_brakes_type__Drum",
+    "transmission_type__Automatic",
+    "transmission_type__Manual",
+    "steering_type__Electric",
+    "steering_type__Manual",
+    "steering_type__Power"
+  ],
+  "split_config": {
+    "train_fraction": 0.7,
+    "validation_fraction": 0.15,
+    "holdout_fraction": 0.15,
+    "random_seed": 42
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "input_dim": 6,
+  "hidden_sizes": [
+    8,
+    4
+  ],
+  "dropout_prob": 0.15
+}

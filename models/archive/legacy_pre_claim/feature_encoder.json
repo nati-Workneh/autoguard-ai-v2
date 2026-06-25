@@ -1,0 +1,35 @@
+{
+  "buying": {
+    "low": 0,
+    "med": 1,
+    "high": 2,
+    "vhigh": 3
+  },
+  "maint": {
+    "low": 0,
+    "med": 1,
+    "high": 2,
+    "vhigh": 3
+  },
+  "doors": {
+    "2": 0,
+    "3": 1,
+    "4": 2,
+    "5more": 3
+  },
+  "persons": {
+    "2": 0,
+    "4": 1,
+    "more": 2
+  },
+  "lug_boot": {
+    "small": 0,
+    "med": 1,
+    "big": 2
+  },
+  "safety": {
+    "low": 0,
+    "med": 1,
+    "high": 2
+  }
+}

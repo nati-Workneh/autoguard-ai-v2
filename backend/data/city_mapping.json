@@ -1,0 +1,258 @@
+{
+  "schema_version": "sprint_08_6_city_intelligence_v1",
+  "approved_usage": {
+    "for_model": [
+      "population_density",
+      "area_cluster"
+    ],
+    "for_display": [],
+    "notes": [
+      "City names are normalized before lookup.",
+      "Area cluster is derived heuristically from frozen training anchors rather than an external municipal taxonomy."
+    ]
+  },
+  "city_name_source": {
+    "provider": "Population and Immigration Authority via data.gov.il",
+    "package_name": "citiesandsettelments",
+    "resource_id": "8f714b6f-c35c-4b40-a0e7-547b675eee0e",
+    "resource_name": "cities in Israel",
+    "last_modified": "2026-06-21T00:30:52.145436"
+  },
+  "population_density_source": {
+    "provider": "Israel Central Bureau of Statistics",
+    "publication": "Population and density per sq. km. of land in localities with 5,000 or more residents on 31.12.2022",
+    "publication_url": "https://www.cbs.gov.il/he/publications/DocLib/2023/2.ShnatonPopulation/st02_24.pdf",
+    "published_date": "2023-09-12",
+    "density_reference_date": "2022-12-31",
+    "unit": "persons_per_sq_km"
+  },
+  "area_cluster_mapping_rule": {
+    "strategy": "nearest_frozen_density_anchor",
+    "source_dataset": "data/raw/train.csv",
+    "note": "Each frozen area_cluster value corresponds to exactly one population_density value in the training data. Real city densities are assigned to the nearest frozen density anchor to preserve model compatibility without retraining.",
+    "anchors": {
+      "C15": 290,
+      "C21": 3264,
+      "C3": 4076,
+      "C1": 4990,
+      "C13": 5410,
+      "C11": 6108,
+      "C7": 6112,
+      "C14": 7788,
+      "C8": 8794,
+      "C6": 13051,
+      "C16": 16206,
+      "C22": 16733,
+      "C9": 17804,
+      "C20": 20905,
+      "C4": 21622,
+      "C2": 27003,
+      "C19": 27742,
+      "C5": 34738,
+      "C12": 34791,
+      "C18": 35036,
+      "C17": 65567,
+      "C10": 73430
+    }
+  },
+  "normalization_rules": [
+    "Trim leading and trailing whitespace.",
+    "Apply Unicode NFKC normalization.",
+    "Remove Hebrew niqqud and other combining marks.",
+    "Case-fold English text.",
+    "Treat hyphens, apostrophes, quotes, geresh, and gershayim as separators.",
+    "Collapse repeated whitespace.",
+    "Resolve aliases against curated canonical city names."
+  ],
+  "cities": {
+    "\u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05dd": {
+      "population_density": 7785,
+      "area_cluster": "C14",
+      "aliases": [
+        "\u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05d9\u05dd",
+        "jerusalem"
+      ]
+    },
+    "\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1-\u05d9\u05e4\u05d5": {
+      "population_density": 9177,
+      "area_cluster": "C8",
+      "aliases": [
+        "\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1",
+        "\u05ea\u05dc \u05d0\u05d1\u05d9\u05d1 \u05d9\u05e4\u05d5",
+        "\u05ea\u05d0",
+        "\u05ea\"\u05d0",
+        "\u05ea\u05f4\u05d0",
+        "tel aviv",
+        "tel aviv yafo",
+        "tel aviv-yafo"
+      ]
+    },
+    "\u05d7\u05d9\u05e4\u05d4": {
+      "population_density": 4418,
+      "area_cluster": "C3",
+      "aliases": [
+        "haifa"
+      ]
+    },
+    "\u05d1\u05d0\u05e8 \u05e9\u05d1\u05e2": {
+      "population_density": 1824,
+      "area_cluster": "C21",
+      "aliases": [
+        "\u05d1\u05d0\u05e8-\u05e9\u05d1\u05e2",
+        "beer sheva",
+        "be'er sheva",
+        "beersheba"
+      ]
+    },
+    "\u05e8\u05d0\u05e9\u05d5\u05df \u05dc\u05e6\u05d9\u05d5\u05df": {
+      "population_density": 4395,
+      "area_cluster": "C3",
+      "aliases": [
+        "\u05e8\u05d0\u05e9\u05d5\u05df",
+        "rishon lezion",
+        "rishon le zion",
+        "rishon leziyyon"
+      ]
+    },
+    "\u05e4\u05ea\u05d7 \u05ea\u05e7\u05d5\u05d5\u05d4": {
+      "population_density": 7139,
+      "area_cluster": "C14",
+      "aliases": [
+        "\u05e4\u05ea\u05d7-\u05ea\u05e7\u05d5\u05d5\u05d4",
+        "petah tikva",
+        "petach tikva",
+        "petah tiqwa"
+      ]
+    },
+    "\u05e0\u05ea\u05e0\u05d9\u05d4": {
+      "population_density": 7526,
+      "area_cluster": "C14",
+      "aliases": [
+        "netanya"
+      ]
+    },
+    "\u05d0\u05e9\u05d3\u05d5\u05d3": {
+      "population_density": 4809,
+      "area_cluster": "C1",
+      "aliases": [
+        "ashdod"
+      ]
+    },
+    "\u05d7\u05d5\u05dc\u05d5\u05df": {
+      "population_density": 10396,
+      "area_cluster": "C8",
+      "aliases": [
+        "holon"
+      ]
+    },
+    "\u05e8\u05de\u05ea \u05d2\u05df": {
+      "population_density": 10521,
+      "area_cluster": "C8",
+      "aliases": [
+        "\u05e8\u05de\u05ea-\u05d2\u05df",
+        "ramat gan"
+      ]
+    },
+    "\u05d4\u05e8\u05e6\u05dc\u05d9\u05d4": {
+      "population_density": 4918,
+      "area_cluster": "C1",
+      "aliases": [
+        "\u05d4\u05e8\u05e6\u05dc\u05d9\u05d9\u05d4",
+        "herzliya",
+        "herzliyya"
+      ]
+    },
+    "\u05d1\u05e0\u05d9 \u05d1\u05e8\u05e7": {
+      "population_density": 29714,
+      "area_cluster": "C19",
+      "aliases": [
+        "\u05d1\u05e0\u05d9-\u05d1\u05e8\u05e7",
+        "bnei brak",
+        "bene beraq"
+      ]
+    },
+    "\u05d1\u05ea \u05d9\u05dd": {
+      "population_density": 15677,
+      "area_cluster": "C16",
+      "aliases": [
+        "\u05d1\u05ea-\u05d9\u05dd",
+        "bat yam"
+      ]
+    },
+    "\u05d2\u05d1\u05e2\u05ea\u05d9\u05d9\u05dd": {
+      "population_density": 19098,
+      "area_cluster": "C9",
+      "aliases": [
+        "givatayim"
+      ]
+    },
+    "\u05e8\u05d7\u05d5\u05d1\u05d5\u05ea": {
+      "population_density": 6345,
+      "area_cluster": "C7",
+      "aliases": [
+        "rehovot"
+      ]
+    },
+    "\u05d0\u05e9\u05e7\u05dc\u05d5\u05df": {
+      "population_density": 3376,
+      "area_cluster": "C21",
+      "aliases": [
+        "ashqelon",
+        "ashkelon"
+      ]
+    },
+    "\u05e8\u05e2\u05e0\u05e0\u05d4": {
+      "population_density": 5403,
+      "area_cluster": "C13",
+      "aliases": [
+        "ra'anana",
+        "raanana"
+      ]
+    },
+    "\u05db\u05e4\u05e8 \u05e1\u05d1\u05d0": {
+      "population_density": 7010,
+      "area_cluster": "C14",
+      "aliases": [
+        "\u05db\u05e4\u05e1",
+        "\u05db\u05e4\"\u05e1",
+        "\u05db\u05e4\u05f4\u05e1",
+        "kfar saba"
+      ]
+    },
+    "\u05d7\u05d3\u05e8\u05d4": {
+      "population_density": 2019,
+      "area_cluster": "C21",
+      "aliases": [
+        "hadera"
+      ]
+    },
+    "\u05de\u05d5\u05d3\u05d9\u05e2\u05d9\u05df-\u05de\u05db\u05d1\u05d9\u05dd-\u05e8\u05e2\u05d5\u05ea": {
+      "population_density": 2052,
+      "area_cluster": "C21",
+      "aliases": [
+        "\u05de\u05d5\u05d3\u05d9\u05e2\u05d9\u05df",
+        "modiin",
+        "modi'in",
+        "modiin maccabbim reut",
+        "modiin-maccabbim-reut"
+      ]
+    },
+    "\u05d0\u05d9\u05dc\u05ea": {
+      "population_density": 539,
+      "area_cluster": "C15",
+      "aliases": [
+        "eilat",
+        "elat"
+      ]
+    },
+    "\u05e7\u05e8\u05d9\u05d9\u05ea \u05d0\u05d5\u05e0\u05d5": {
+      "population_density": 9391,
+      "area_cluster": "C8",
+      "aliases": [
+        "\u05e7\u05e8\u05d9\u05ea \u05d0\u05d5\u05e0\u05d5",
+        "qiryat ono",
+        "kiryat ono"
+      ]
+    }
+  }
+}
