@@ -1,0 +1,2 @@
+threshold,automation_rate,manual_review_rate,manual_hours_before,manual_hours_after,review_hours_saved,annual_labor_savings,annual_fp_cost,annual_fn_cost,total_error_cost,recurring_operating_cost,annual_net_benefit,implementation_cost,year1_roi_pct,recurring_operating_roi_pct,payback_months
+0.15,0.38836772983114454,0.6116322701688556,4000.0,1467.9174484052533,2532.0825515947467,113943.7148217636,18574.108818011257,20262.664165103193,56960.60037523453,141016.88555347093,38983.11444652907,60000.0,-35.02814258911822,27.644288337191657,18.46953508518626

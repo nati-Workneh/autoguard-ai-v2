@@ -1,0 +1,132 @@
+{
+  "model_name": "AutoGuard AI V2 Production Model (Notebook Reconstruction)",
+  "model_type": "LogisticRegression",
+  "model_family": "sklearn.linear_model.LogisticRegression",
+  "version": "v2.0.0-notebook-reconstruction",
+  "training_date": "2026-07-30",
+  "feature_list": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "ANNUAL_MILEAGE",
+    "VEHICLE_OWNERSHIP",
+    "VEHICLE_YEAR"
+  ],
+  "feature_order_post_preprocessing": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "VEHICLE_YEAR",
+    "ANNUAL_MILEAGE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "VEHICLE_OWNERSHIP"
+  ],
+  "target": "OUTCOME",
+  "excluded_features": [
+    "ID",
+    "GENDER",
+    "RACE",
+    "EDUCATION",
+    "INCOME",
+    "CREDIT_SCORE",
+    "MARRIED",
+    "CHILDREN",
+    "POSTAL_CODE",
+    "VEHICLE_TYPE"
+  ],
+  "preprocessing": {
+    "AGE": {
+      "strategy": "ordinal_encoding",
+      "order": [
+        "16-25",
+        "26-39",
+        "40-64",
+        "65+"
+      ]
+    },
+    "DRIVING_EXPERIENCE": {
+      "strategy": "ordinal_encoding",
+      "order": [
+        "0-9y",
+        "10-19y",
+        "20-29y",
+        "30y+"
+      ]
+    },
+    "VEHICLE_YEAR": {
+      "strategy": "binary_encoding",
+      "order": [
+        "before 2015",
+        "after 2015"
+      ]
+    },
+    "ANNUAL_MILEAGE": {
+      "strategy": "median_imputation",
+      "fit_on": "train_only"
+    },
+    "VEHICLE_OWNERSHIP": {
+      "strategy": "passthrough"
+    },
+    "PAST_ACCIDENTS": {
+      "strategy": "passthrough"
+    },
+    "SPEEDING_VIOLATIONS": {
+      "strategy": "passthrough"
+    },
+    "DUIS": {
+      "strategy": "passthrough"
+    },
+    "scaling": "StandardScaler (fit on train only)"
+  },
+  "training_rows": 8000,
+  "test_rows": 2000,
+  "hyperparameters": {
+    "max_iter": 1000,
+    "random_state": 42
+  },
+  "evaluation_metrics": {
+    "test_set": {
+      "accuracy": 0.809,
+      "precision": 0.6762589928057554,
+      "recall": 0.7496012759170654,
+      "f1": 0.7110438729198184,
+      "roc_auc": 0.8752170766584075,
+      "confusion_matrix": [
+        [
+          1148,
+          225
+        ],
+        [
+          157,
+          470
+        ]
+      ]
+    },
+    "cross_validation_5fold": {
+      "accuracy": {
+        "mean": 0.8242,
+        "std": 0.0049
+      },
+      "precision": {
+        "mean": 0.707,
+        "std": 0.0075
+      },
+      "recall": {
+        "mean": 0.7498,
+        "std": 0.0163
+      },
+      "f1": {
+        "mean": 0.7277,
+        "std": 0.0092
+      },
+      "roc_auc": {
+        "mean": 0.8936,
+        "std": 0.0027
+      }
+    }
+  },
+  "note": "This is a notebook-generated reconstruction for educational and reproducibility purposes. It does not replace the frozen production artifact at models/model_v2.pkl."
+}

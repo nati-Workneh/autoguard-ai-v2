@@ -1,0 +1,11 @@
+{
+  "policy_version": "v1.0-sprint3.3",
+  "business_threshold": 0.15,
+  "statistical_threshold": 0.3,
+  "manual_review_required_at_or_above_business_threshold": true,
+  "human_review_required_for_high_risk": true,
+  "selection_dataset": "real_validation",
+  "selection_objective": "maximize_expected_annual_net_benefit",
+  "economic_model_version": "sprint3.3",
+  "source": "Sprint 3 economic optimization"
+}

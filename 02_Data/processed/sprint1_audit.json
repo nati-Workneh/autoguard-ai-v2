@@ -1,0 +1,62 @@
+{
+  "source": "02_Data\\raw\\Car_Insurance_Claim.csv",
+  "source_rows": 10000,
+  "source_duplicate_rows": 0,
+  "source_missing_values": {
+    "ID": 0,
+    "AGE": 0,
+    "GENDER": 0,
+    "RACE": 0,
+    "DRIVING_EXPERIENCE": 0,
+    "EDUCATION": 0,
+    "INCOME": 0,
+    "CREDIT_SCORE": 982,
+    "VEHICLE_OWNERSHIP": 0,
+    "VEHICLE_YEAR": 0,
+    "MARRIED": 0,
+    "CHILDREN": 0,
+    "POSTAL_CODE": 0,
+    "ANNUAL_MILEAGE": 957,
+    "VEHICLE_TYPE": 0,
+    "SPEEDING_VIOLATIONS": 0,
+    "DUIS": 0,
+    "PAST_ACCIDENTS": 0,
+    "OUTCOME": 0
+  },
+  "source_class_distribution": {
+    "0.0": 6867,
+    "1.0": 3133
+  },
+  "audits": [
+    {
+      "pair": "Real Train / Real Validation",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Real Train / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Real Validation / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Training Pool / Real Validation",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Training Pool / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    }
+  ],
+  "selection": {
+    "selected_model": "Logistic Regression",
+    "selection_dataset": "real_validation",
+    "selection_rule": "highest ROC-AUC; F1 breaks ties"
+  }
+}

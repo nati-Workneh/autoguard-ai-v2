@@ -1,0 +1,11 @@
+parameter,base_value,unit,source_type,source,description,conservative_value,expected_value,optimistic_value
+annual_applications,12000,applications/year,Scenario assumption,Academic scenario,Annual underwriting applications,8000,12000,18000
+manual_review_minutes,20,minutes/application,Scenario assumption,Academic scenario,Baseline manual review time for every application,25,20,16
+ai_assisted_review_minutes,12,minutes/reviewed application,Scenario assumption,Academic scenario,Human time for a case routed to review,15,12,10
+underwriter_hourly_cost,45,USD/hour,Scenario assumption,Academic scenario,Fully loaded underwriting labor cost,40,45,50
+implementation_cost,60000,USD one-time,Scenario assumption,Academic scenario,Integration and deployment investment,80000,60000,45000
+annual_maintenance_cost,18000,USD/year,Scenario assumption,Academic scenario,Monitoring hosting and periodic revalidation,25000,18000,14000
+false_positive_cost,5,USD/FP,Scenario assumption,Academic scenario,Customer-friction proxy beyond review labor (review labor is already modeled),10,5,2
+false_negative_cost,150,USD/FN,Scenario assumption,Academic scenario,Expected exposure for missed high-risk applicant,300,150,100
+true_positive_operational_cost,5,USD/TP,Scenario assumption,Academic scenario,Enhanced review action beyond standard review,10,5,2
+annual_fte_hours,1800,hours/FTE/year,Scenario assumption,Academic scenario,Capacity-equivalent conversion only,1800,1800,1800

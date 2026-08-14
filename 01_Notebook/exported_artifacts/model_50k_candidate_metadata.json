@@ -1,0 +1,162 @@
+{
+  "model_name": "AutoGuard AI 50k-Dataset Candidate Model",
+  "model_type": "Logistic Regression",
+  "model_version": "v3.0.0-50k",
+  "training_date": "2026-08-04",
+  "random_seed": 42,
+  "dataset": {
+    "source_file": "Car_Insurance_Claim_50000_FINAL.csv",
+    "total_rows": 50000,
+    "real_rows": 10000,
+    "synthetic_rows": 40000,
+    "real_dev_rows_in_training_pool": 8000,
+    "training_pool_rows": 48000,
+    "real_holdout_rows": 2000,
+    "synthetic_id_range": [
+      1000000,
+      1039999
+    ]
+  },
+  "feature_list": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "ANNUAL_MILEAGE",
+    "VEHICLE_OWNERSHIP",
+    "VEHICLE_YEAR"
+  ],
+  "feature_order_post_preprocessing": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "VEHICLE_YEAR",
+    "ANNUAL_MILEAGE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "VEHICLE_OWNERSHIP"
+  ],
+  "target": "OUTCOME",
+  "excluded_features": [
+    "ID",
+    "GENDER",
+    "RACE",
+    "EDUCATION",
+    "INCOME",
+    "CREDIT_SCORE",
+    "MARRIED",
+    "CHILDREN",
+    "POSTAL_CODE",
+    "VEHICLE_TYPE"
+  ],
+  "evaluation_metrics": {
+    "real_holdout": {
+      "accuracy": 0.8095,
+      "precision": 0.6783,
+      "recall": 0.7464,
+      "f1": 0.7107,
+      "roc_auc": 0.8752,
+      "confusion_matrix": [
+        [
+          1151,
+          222
+        ],
+        [
+          159,
+          468
+        ]
+      ],
+      "n_evaluated": 2000
+    },
+    "training_time_sec": 0.1673
+  },
+  "all_candidates_real_holdout": {
+    "Baseline": {
+      "accuracy": 0.6865,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "training_time_sec": 0.0519
+    },
+    "Logistic Regression": {
+      "accuracy": 0.8095,
+      "precision": 0.6783,
+      "recall": 0.7464,
+      "f1": 0.7107,
+      "roc_auc": 0.8752,
+      "training_time_sec": 0.1673
+    },
+    "Random Forest": {
+      "accuracy": 0.8005,
+      "precision": 0.6691,
+      "recall": 0.7193,
+      "f1": 0.6933,
+      "roc_auc": 0.8659,
+      "training_time_sec": 1.6435
+    },
+    "Model A": {
+      "accuracy": 0.803,
+      "precision": 0.6616,
+      "recall": 0.7608,
+      "f1": 0.7077,
+      "roc_auc": 0.867,
+      "training_time_sec": 232.4323
+    },
+    "Model B": {
+      "accuracy": 0.79,
+      "precision": 0.661,
+      "recall": 0.6778,
+      "f1": 0.6693,
+      "roc_auc": 0.8514,
+      "training_time_sec": 219.5742
+    },
+    "Model C": {
+      "accuracy": 0.804,
+      "precision": 0.6639,
+      "recall": 0.7592,
+      "f1": 0.7083,
+      "roc_auc": 0.867,
+      "training_time_sec": 235.6068
+    }
+  },
+  "automation_eligibility_rate_fresh": 0.5075,
+  "note": "This is a CANDIDATE artifact from the 50,000-row dataset migration. It has not been promoted to production. It does not overwrite 03_Model/model_v2.pkl or exported_artifacts/model_v2_reconstructed.pkl.",
+  "hyperparameters": {
+    "max_iter": 1000,
+    "random_state": 42
+  },
+  "preprocessing": {
+    "AGE": {
+      "strategy": "ordinal_encoding",
+      "order": [
+        "16-25",
+        "26-39",
+        "40-64",
+        "65+"
+      ]
+    },
+    "DRIVING_EXPERIENCE": {
+      "strategy": "ordinal_encoding",
+      "order": [
+        "0-9y",
+        "10-19y",
+        "20-29y",
+        "30y+"
+      ]
+    },
+    "VEHICLE_YEAR": {
+      "strategy": "ordinal_encoding",
+      "order": [
+        "before 2015",
+        "after 2015"
+      ]
+    },
+    "ANNUAL_MILEAGE": {
+      "strategy": "median_imputation",
+      "fit_on": "training_pool_only"
+    },
+    "scaling": "StandardScaler (fit on training_pool only)"
+  }
+}

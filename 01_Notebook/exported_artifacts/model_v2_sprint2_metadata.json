@@ -1,0 +1,301 @@
+{
+  "model_name": "AutoGuard AI V2 Production Model",
+  "model_type": "Logistic Regression",
+  "model_family": "LogisticRegression",
+  "version": "v3.2.0-sprint2",
+  "training_date": "2026-08-13",
+  "target": "OUTCOME",
+  "feature_list": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "ANNUAL_MILEAGE",
+    "VEHICLE_OWNERSHIP",
+    "VEHICLE_YEAR"
+  ],
+  "feature_order_post_preprocessing": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "VEHICLE_YEAR",
+    "ANNUAL_MILEAGE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "VEHICLE_OWNERSHIP"
+  ],
+  "real_train_rows": 6400,
+  "real_validation_rows": 1599,
+  "real_test_rows": 2001,
+  "additional_training_rows": 40000,
+  "training_pool_rows": 46400,
+  "model_selection_dataset": "real_validation",
+  "final_evaluation_dataset": "real_test",
+  "candidate_validation_results": [
+    {
+      "accuracy": 0.8142589118198874,
+      "precision": 0.6795774647887324,
+      "recall": 0.7704590818363274,
+      "f1": 0.7221702525724977,
+      "roc_auc": 0.8875563990416253,
+      "average_precision": 0.7760340144586697,
+      "brier_score": 0.12202648634302114,
+      "model": "Logistic Regression",
+      "training_time_sec": 0.18479600000136998
+    },
+    {
+      "accuracy": 0.8073796122576611,
+      "precision": 0.6926147704590818,
+      "recall": 0.6926147704590818,
+      "f1": 0.6926147704590818,
+      "roc_auc": 0.8715610673007357,
+      "average_precision": 0.7537385903527536,
+      "brier_score": 0.1323278304117359,
+      "model": "Neural Network B",
+      "training_time_sec": 3.1912249000015436
+    },
+    {
+      "accuracy": 0.7979987492182614,
+      "precision": 0.7354497354497355,
+      "recall": 0.5548902195608783,
+      "f1": 0.6325369738339022,
+      "roc_auc": 0.8663819901181244,
+      "average_precision": 0.7448178056828866,
+      "brier_score": 0.14332533932091474,
+      "model": "Neural Network A",
+      "training_time_sec": 0.8387273999978788
+    },
+    {
+      "accuracy": 0.7736085053158224,
+      "precision": 0.9064327485380117,
+      "recall": 0.3093812375249501,
+      "f1": 0.46130952380952384,
+      "roc_auc": 0.8628698886380245,
+      "average_precision": 0.7438445374117149,
+      "brier_score": 0.1938597410917282,
+      "model": "Neural Network C",
+      "training_time_sec": 6.088262399993255
+    },
+    {
+      "accuracy": 0.7904940587867417,
+      "precision": 0.6554307116104869,
+      "recall": 0.6986027944111777,
+      "f1": 0.6763285024154589,
+      "roc_auc": 0.831673629062458,
+      "average_precision": 0.6485821298438907,
+      "brier_score": 0.15373788824625187,
+      "model": "Random Forest",
+      "training_time_sec": 1.1785213999974076
+    },
+    {
+      "accuracy": 0.6866791744840526,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "average_precision": 0.3133208255159475,
+      "brier_score": 0.3133208255159475,
+      "model": "Baseline",
+      "training_time_sec": 0.18778900000324938
+    }
+  ],
+  "final_test_results": {
+    "accuracy": 0.8220889555222389,
+    "precision": 0.6785243741765481,
+    "recall": 0.8213716108452951,
+    "f1": 0.7431457431457431,
+    "roc_auc": 0.8903305637389756,
+    "average_precision": 0.7793332466882207,
+    "brier_score": 0.12002122435491808,
+    "confusion_matrix": [
+      [
+        1130,
+        244
+      ],
+      [
+        112,
+        515
+      ]
+    ],
+    "n_evaluated": 2001
+  },
+  "leakage_audit": [
+    {
+      "pair": "Real Train / Real Validation",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Real Train / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Real Validation / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Training Pool / Real Validation",
+      "id_overlap": 0,
+      "content_overlap": 0
+    },
+    {
+      "pair": "Training Pool / Real Test",
+      "id_overlap": 0,
+      "content_overlap": 0
+    }
+  ],
+  "preprocessing": "ColumnTransformer and StandardScaler are fitted inside each Pipeline.fit on training data only.",
+  "additional_data_method": "Deterministic bootstrap sampled exclusively from real_train (random_state=42).",
+  "artifact_sha256": "71d1474c36c4719a950e62659c34d28701c6ec66e072e01b18d6f67344932daf",
+  "artifact_paths": [
+    "03_Model/model_v2.pkl",
+    "01_Notebook/exported_artifacts/model_v2_sprint2.pkl"
+  ],
+  "statistical_validation": {
+    "bootstrap_iterations": 5000,
+    "validation_confidence_intervals": {
+      "roc_auc": [
+        0.8696802472286985,
+        0.9037845805820033
+      ],
+      "accuracy": [
+        0.7948717948717948,
+        0.8330206378986866
+      ],
+      "precision": [
+        0.6398601398601399,
+        0.717547440028643
+      ],
+      "recall": [
+        0.733456206679269,
+        0.806523105710201
+      ],
+      "f1": [
+        0.6908752327746741,
+        0.7511484887285144
+      ],
+      "average_precision": [
+        0.7360317850550999,
+        0.8133108944222801
+      ],
+      "brier_score": [
+        0.11233471895639684,
+        0.13218790443881623
+      ]
+    },
+    "best_neural_network": "Neural Network B",
+    "paired_model_comparisons": {
+      "Logistic Regression vs Neural Network B": {
+        "delta_roc_auc": 0.01599533174088963,
+        "ci_95": [
+          0.009079667041318837,
+          0.022996941010350082
+        ],
+        "two_sided_bootstrap_p": 0.0003999200159968006,
+        "bootstrap_iterations": 5000
+      },
+      "Logistic Regression vs Random Forest": {
+        "delta_roc_auc": 0.0558827699791673,
+        "ci_95": [
+          0.04075675624916053,
+          0.07218095077524424
+        ],
+        "two_sided_bootstrap_p": 0.0003999200159968006,
+        "bootstrap_iterations": 5000
+      }
+    },
+    "final_test_confidence_intervals": {
+      "roc_auc": [
+        0.8750292481220165,
+        0.9054862407335572
+      ],
+      "accuracy": [
+        0.8055972013993004,
+        0.8385807096451774
+      ],
+      "precision": [
+        0.6455521683642336,
+        0.7108284091781136
+      ],
+      "recall": [
+        0.7913174465533169,
+        0.8517299487056891
+      ],
+      "f1": [
+        0.7174887892376681,
+        0.7679696189007802
+      ],
+      "average_precision": [
+        0.7436543516813515,
+        0.8143304551050005
+      ],
+      "brier_score": [
+        0.11101354671249411,
+        0.1290414871654361
+      ]
+    }
+  },
+  "calibration": {
+    "methods_tested": [
+      {
+        "method": "uncalibrated",
+        "brier_score": 0.12202648634302114,
+        "roc_auc": 0.8875563990416253,
+        "log_loss": 0.3856457069949941
+      },
+      {
+        "method": "sigmoid",
+        "brier_score": 0.12202763613223833,
+        "roc_auc": 0.8875491276099895,
+        "log_loss": 0.38563294091473377
+      },
+      {
+        "method": "isotonic",
+        "brier_score": 0.12261109875830971,
+        "roc_auc": 0.8872346381917404,
+        "log_loss": 0.3853799897201849
+      }
+    ],
+    "selected_method": "uncalibrated",
+    "decision": "Calibration rejected: validation Brier improvement did not meet the pre-specified practical threshold."
+  },
+  "threshold_analysis": {
+    "default_threshold": 0.5,
+    "selected_statistical_threshold": 0.3,
+    "selection_rule": "maximum Validation F1",
+    "validation_table_file": "02_Data/processed/sprint2_threshold_analysis.csv",
+    "final_test_default_threshold": {
+      "accuracy": 0.8250874562718641,
+      "precision": 0.7033773861967695,
+      "recall": 0.7639553429027113,
+      "f1": 0.7324159021406728,
+      "roc_auc": 0.8903305637389756,
+      "average_precision": 0.7793332466882207,
+      "brier_score": 0.12002122435491808
+    },
+    "final_test_selected_threshold": {
+      "accuracy": 0.8220889555222389,
+      "precision": 0.6785243741765481,
+      "recall": 0.8213716108452951,
+      "f1": 0.7431457431457431,
+      "roc_auc": 0.8903305637389756,
+      "average_precision": 0.7793332466882207,
+      "brier_score": 0.12002122435491808,
+      "confusion_matrix": [
+        [
+          1130,
+          244
+        ],
+        [
+          112,
+          515
+        ]
+      ],
+      "n_evaluated": 2001
+    }
+  },
+  "sprint2_dropout_architecture": "NN C: Dense(128, ReLU) -> Dropout(0.30) -> Dense(64, LeakyReLU) -> Dropout(0.30) -> output logit"
+}
