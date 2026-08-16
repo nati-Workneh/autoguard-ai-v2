@@ -8,11 +8,11 @@
     "source_file": "Car_Insurance_Claim_50000_FINAL.csv",
     "total_rows": 50000,
     "real_rows": 10000,
-    "synthetic_rows": 40000,
+    "additional_bootstrap_rows": 40000,
     "real_dev_rows_in_training_pool": 8000,
     "training_pool_rows": 48000,
     "real_holdout_rows": 2000,
-    "synthetic_id_range": [
+    "additional_bootstrap_id_range": [
       1000000,
       1039999
     ]

@@ -31,7 +31,7 @@ compared directly, not assumed from the copy operation).
 originally exported as
 `01_Notebook/exported_artifacts/model_50k_candidate.pkl`
 (`model_version`: `v3.0.0-50k`), trained on the 50,000-row dataset
-(10,000 real + 40,000 statistically controlled synthetic rows), evaluated
+(10,000 source rows + 40,000 additional deterministic bootstrap rows), evaluated
 on a 2,000-row untouched real holdout. See
 `01_Notebook/exported_artifacts/model_50k_candidate_metadata.json` for the
 full metric set and methodology.

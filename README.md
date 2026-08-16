@@ -1,4 +1,4 @@
-# AutoGuard AI — Sprint 3
+# AutoGuard AI — פרויקט סופי
 
 AutoGuard AI was developed using a 50,000-row modeling dataset. The Machine Learning workflow uses isolated training, validation, and final test stages to provide unbiased performance evaluation.
 
