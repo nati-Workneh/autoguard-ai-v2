@@ -1,16 +1,12 @@
-"""Feature Builder for the AutoGuard AI V2 production model (Sprint 10.7).
+"""Feature builder for the AutoGuard AI production model.
 
-Builds the exact 8-column raw feature row expected by ``models/model_v2.pkl``
+Builds the exact 8-column raw feature row expected by ``model_v2.pkl``
 (AGE, DRIVING_EXPERIENCE, PAST_ACCIDENTS, SPEEDING_VIOLATIONS, DUIS,
 ANNUAL_MILEAGE, VEHICLE_OWNERSHIP, VEHICLE_YEAR). The exported pipeline
 contains its own ColumnTransformer (ordinal encoders + median imputer) and
 StandardScaler, so this builder passes raw values through in the same
-shapes used during Sprint 10.6 training — it does not re-implement any
-encoding the pipeline already owns.
-
-This module is new and additive: it does not modify or import anything from
-the V1 ``backend/feature_builder.py`` module, which remains frozen and
-available in legacy mode.
+shapes used during training — it does not re-implement any encoding the
+pipeline already owns.
 """
 
 from __future__ import annotations
@@ -33,11 +29,11 @@ MODEL_V2_FEATURE_ORDER = [
     "VEHICLE_YEAR",
 ]
 
-# Must match the bin edges and labels used to train model_v2.pkl (Sprint
-# 10.2A encoding_strategy.md / Sprint 10.6 metadata). Age/experience are
-# collected as exact years from the user, then bucketed deterministically
-# into these official bins -- this is lossless bucketing of a real value,
-# not the fabricated-numeric-age direction Sprint 10.2A explicitly forbade.
+# Must match the bin edges and labels used to train model_v2.pkl (see
+# AGE/DRIVING_EXPERIENCE categories in 01_ML_Model/model_v2_metadata.json).
+# Age/experience are collected as exact years from the user, then bucketed
+# deterministically into these official bins -- this is lossless bucketing
+# of a real value, not a fabricated numeric age.
 AGE_BINS = [
     (18, 25, "16-25"),
     (26, 39, "26-39"),
@@ -51,13 +47,12 @@ EXPERIENCE_BINS = [
     (30, 200, "30y+"),
 ]
 
-# Explicit, documented ownership mapping (Sprint 10.3.1 recommendation,
-# implemented in this sprint). "private" is the only option that maps to
-# "owns" (1); both "leasing" and "company" map to "does not own" (0),
-# matching how VEHICLE_OWNERSHIP was defined in the historical training
-# data (self-reported personal ownership, not legal-title registry data --
-# see Sprint 10.3.1 vehicle_ownership_mapping.md for why registry-derived
-# ownership was rejected in favor of asking the user directly).
+# Explicit, documented ownership mapping. "private" is the only option that
+# maps to "owns" (1); both "leasing" and "company" map to "does not own" (0),
+# matching how VEHICLE_OWNERSHIP was defined in the training data
+# (self-reported personal ownership, not legal-title registry data --
+# registry-derived ownership is not available, so the user is asked
+# directly instead).
 OWNERSHIP_MAPPING: dict[str, int] = {
     "private": 1,
     "leasing": 0,
@@ -89,9 +84,9 @@ class FeatureBuilderV2Error(RuntimeError):
 class InvalidOwnershipError(FeatureBuilderV2Error):
     """Raised when vehicle_ownership is missing or not one of the approved values.
 
-    No default value is ever substituted -- this is a fail-fast contract per
-    the Sprint 10.7 requirement, since ownership is one of the model's
-    strongest features (Sprint 10.6 final_feature_importance.md) and a
+    No default value is ever substituted -- this is a deliberate fail-fast
+    contract, since ownership is one of the model's strongest features (see
+    01_ML_Model/model_v2_metadata.json feature_importance) and a
     silently-guessed value would corrupt the prediction without any visible
     error.
     """

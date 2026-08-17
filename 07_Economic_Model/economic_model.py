@@ -1,4 +1,4 @@
-"""Sprint 3.1 audited, configurable economic decision layer (no ML training)."""
+"""Configurable economic decision layer (no ML training)."""
 from __future__ import annotations
 import hashlib,json
 from pathlib import Path

@@ -1,4 +1,4 @@
-"""Orchestration service for the Sprint 10.7 V2 quick-predict endpoint."""
+"""Orchestration service for the V2 quick-predict endpoint."""
 
 from __future__ import annotations
 

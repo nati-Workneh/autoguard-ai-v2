@@ -51,30 +51,19 @@ MODEL_FEATURES = [
     "VEHICLE_YEAR",
 ]
 
-# Classification threshold: at or above this predicted probability, the
-# headline "Predicted Class" reads as a claim. This mirrors the 0.5
-# convention the notebook itself uses everywhere it turns a probability into
-# a class label (Sections 13 and 16).
-#
-# This and the two risk-band cutoffs below are intentionally NOT sourced
-# from the model metadata artifact: they are presentation/business
-# thresholds (how a probability is displayed), not model metrics, and the
-# notebook's own exported metadata does not define them. They stay as
-# documented, easy-to-edit constants rather than being invented into the
-# metadata file (Sprint 7 acceptance review, Part 1.3).
-CLASSIFICATION_THRESHOLD = 0.5
+# Risk categorization bands for the Low / Medium / High display. These are
+# presentation bands, not a decision threshold: the automate-vs-review
+# business action always comes from the operating policy in
+# 06_Production_Interface/backend/business_policy.py (business_threshold in
+# 07_Economic_Model/business_policy.json), never from these cutoffs. Change
+# the two numbers below and every part of the interface that shows a risk
+# band follows.
+LOW_RISK_MAX = 0.30  # probability strictly below this -> Low Risk band
+HIGH_RISK_MIN = 0.60  # probability at or above this -> High Risk band
 
-# Risk-band cutoffs for the Low / Medium / High display. Change the two
-# numbers below and every part of the interface that shows a risk level
-# follows.
-LOW_RISK_MAX = 0.30  # probability strictly below this -> Low Risk
-HIGH_RISK_MIN = 0.60  # probability at or above this -> High Risk
-
-# Sprint 9C: RISK_STYLES keys, colors, and the risk-band logic that selects
-# between them (classify_risk(), LOW_RISK_MAX/HIGH_RISK_MIN) are completely
-# unchanged. Only the "recommendation" display text was translated to
-# Hebrew for the UX cleanup -- same three bands, same thresholds, same
-# color-to-band mapping as before.
+# RISK_STYLES maps each risk band to its display color and Hebrew
+# recommendation text; classify_risk() below selects between them using
+# LOW_RISK_MAX/HIGH_RISK_MIN.
 RISK_STYLES = {
     "Low Risk": {
         "color": "#1a7f37",
@@ -94,13 +83,20 @@ RISK_STYLES = {
 }
 
 # Hebrew display text for the three risk bands classify_risk() can return.
-# classify_risk() itself, and the "Low Risk"/"Medium Risk"/"High Risk"
-# strings it returns internally, are unchanged -- this dict only controls
-# what the badge shows the user.
 RISK_LEVEL_LABELS_HE = {
     "Low Risk": "סיכון נמוך",
     "Medium Risk": "סיכון בינוני",
     "High Risk": "סיכון גבוה",
+}
+
+# Hebrew display names for the model families the pipeline could contain.
+# The model name itself is always read from metadata (never hardcoded); this
+# dict only supplies a bilingual label for known families, falling back to
+# the raw metadata value for anything else.
+MODEL_TYPE_LABELS_HE = {
+    "Random Forest": "יער אקראי (Random Forest)",
+    "Logistic Regression": "רגרסיה לוגיסטית (Logistic Regression)",
+    "Baseline": "מודל בסיס (Baseline)",
 }
 
 # ======================================================================
@@ -120,15 +116,14 @@ with open(METADATA_PATH, encoding="utf-8") as f:
     metadata = json.load(f)
 
 # Headline metrics shown in the "Model Information" panel are read directly
-# from the notebook-exported metadata artifact rather than duplicated as
-# separate literals -- if the notebook is re-run and re-exports this file,
-# the displayed numbers can never drift out of sync with it (Sprint 7
-# acceptance review, Part 1.3). Sprint 9 candidate metadata reports this
-# block as "real_holdout" (the 2,000-row untouched real test set) rather
-# than "test_set" -- same meaning, new key name from the 50k-dataset export.
+# from the notebook-exported metadata artifact (final_test_results, the
+# metrics from the untouched Test partition) rather than duplicated as
+# separate literals, so the displayed numbers can never drift out of sync
+# with a re-run of the notebook.
 _TEST_METRICS = metadata["final_test_results"]
 MODEL_ACCURACY = _TEST_METRICS["accuracy"]
 MODEL_ROC_AUC = _TEST_METRICS["roc_auc"]
+MODEL_TYPE = metadata["model_type"]
 
 # Read the exact category choices straight off the fitted encoders instead
 # of hardcoding them a second time, so the dropdown options can never drift
@@ -143,14 +138,12 @@ VEHICLE_YEAR_CHOICES = list(preprocessor.named_transformers_["ordinal"].categori
 
 OWNERSHIP_CHOICES = ["Owns the vehicle", "Does not own"]
 
-# Sprint 9C: Hebrew display text for the two option-style fields whose raw
-# category values read as full English sentences (unlike e.g. "16-25",
-# which is a compact, language-neutral code). Used only to build the
-# (display_label, value) tuples Gradio's Radio/Dropdown accept -- the VALUE
-# submitted to validate_inputs()/predict() on selection is still the exact
-# original string ("Owns the vehicle", "before 2015", ...), so
-# OWNERSHIP_CHOICES/VEHICLE_YEAR_CHOICES and every comparison against them
-# are completely unchanged.
+# Hebrew display text for the two option-style fields whose raw category
+# values read as full English sentences (unlike e.g. "16-25", which is a
+# compact, language-neutral code). Used only to build the (display_label,
+# value) tuples Gradio's Radio/Dropdown accept -- the VALUE submitted to
+# validate_inputs()/predict() on selection is still the exact original
+# string ("Owns the vehicle", "before 2015", ...).
 OWNERSHIP_LABELS_HE = {"Owns the vehicle": "בעלות פרטית", "Does not own": "לא בבעלות"}
 VEHICLE_YEAR_LABELS_HE = {"before 2015": "לפני 2015", "after 2015": "אחרי 2015"}
 
@@ -169,12 +162,12 @@ if _expected_columns != _actual_columns:  # pragma: no cover - defensive, should
         "Refusing to build explanations against a mismatched artifact."
     )
 
-# Sprint 9C: user-facing Hebrew labels for the 8 model features, plus the
+# User-facing Hebrew labels for the 8 model features, plus the
 # gender-agreeing verb forms used when a feature appears as a "top factor"
 # in the result panel (Hebrew requires the verb to agree with the noun's
 # gender/number -- e.g. "ותק נהיגה מפחית" (masculine) vs. "שנת הרכב מפחיתה"
 # (feminine)). Internal feature keys (AGE, DRIVING_EXPERIENCE, ...) and
-# everything that uses them for computation are unchanged; this dict only
+# everything that uses them for computation are unaffected; this dict only
 # controls display text.
 FEATURE_DISPLAY_HE: dict[str, dict[str, str]] = {
     "AGE": {"label": "קבוצת גיל", "increases": "מגדילה סיכון", "decreases": "מפחיתה סיכון"},
@@ -189,9 +182,7 @@ FEATURE_DISPLAY_HE: dict[str, dict[str, str]] = {
 
 # Demo profiles for the three quick-load buttons. Each was checked against
 # the loaded pipeline (not guessed) to confirm it actually lands in the
-# intended risk band before being wired into the UI. Re-verified against the
-# Sprint 9 50k-dataset model (Sprint 9B) -- same profiles, still land in the
-# same bands, updated probabilities:
+# intended risk band before being wired into the UI:
 #   Low    -> ~0.1% predicted claim probability
 #   Medium -> ~52.6%
 #   High   -> ~96.2%
@@ -201,25 +192,22 @@ HIGH_RISK_EXAMPLE = ("16-25", "0-9y", 2, 5, 1, 18000, "Does not own", "before 20
 
 # Default profile shown on first load. Chosen only because it is an
 # unremarkable, middle-of-the-road driver profile (not because it lands in
-# any particular risk band) -- it scores ~18.3% / Low Risk on the Sprint 9
-# 50k-dataset model (Sprint 9B; was ~17.9% on the prior 10k-dataset model --
-# same profile, freshly re-verified, not reused blindly). The original
-# defaults (16-25, 0-9y experience) scored ~60.4% / High Risk on first load
-# with nothing changed, which the Sprint 6 acceptance review flagged as a
-# confusing first impression for a demo. No model, threshold, or scoring
-# logic changed to produce this -- only which of the model's own valid
-# categories the form starts on.
+# any particular risk band) -- it scores ~18.3% / Low Risk. The model's own
+# youngest/least-experienced categories (16-25, 0-9y experience) score
+# ~60.4% / High Risk, which makes a confusing first impression for a demo,
+# so the form starts on a middle-of-the-road profile instead. No model,
+# threshold, or scoring logic changed to produce this -- only which of the
+# model's own valid categories the form starts on.
 DEFAULT_PROFILE = ("26-39", "10-19y", 0, 0, 0, 12000, "Owns the vehicle", "before 2015")
 
 
 # ======================================================================
-# Server-side validation (Sprint 7 acceptance review, Part 1.1)
+# Server-side validation
 # ======================================================================
 # Gradio's client-side `minimum=`/`maximum=` hints on gr.Number are cosmetic
-# only: the Sprint 6 acceptance review proved that a value below the stated
-# minimum (Past Accidents = -5) was still submitted and scored (96.6% / High
-# Risk) rather than being blocked. The checks below are the only real
-# enforcement and run before any call to predict_proba.
+# only -- a value below the stated minimum (e.g. Past Accidents = -5) is
+# still submitted rather than being blocked in the browser. The checks below
+# are the only real enforcement and run before any call to predict_proba.
 def _validate_choice(label: str, value: str, choices: list[str]) -> str | None:
     if value not in choices:
         return f"{label}: יש לבחור ערך תקין מהרשימה."
@@ -264,9 +252,7 @@ def validate_inputs(
 ) -> list[str]:
     """Return a list of human-readable validation errors, empty if the row
     is safe to score. Every one of the 8 model inputs is checked; nothing is
-    silently clamped or coerced into range. (Sprint 9C: only the message
-    text and field-label wording changed to Hebrew -- every condition below
-    is byte-identical to before the UX cleanup.)"""
+    silently clamped or coerced into range."""
     checks = [
         _validate_choice(FEATURE_DISPLAY_HE["AGE"]["label"], age, AGE_CHOICES),
         _validate_choice(FEATURE_DISPLAY_HE["DRIVING_EXPERIENCE"]["label"], driving_experience, EXPERIENCE_CHOICES),
@@ -299,10 +285,9 @@ def top_factors(row: pd.DataFrame, limit: int = 3) -> list[tuple[str, str]]:
     their fitted global importances with the standardized input direction.
     This is a model explanation aid, not a causal claim.
 
-    Sprint 9C: returns the raw feature key (e.g. "AGE") instead of a
-    pre-resolved label, so the caller can look up the Hebrew label and the
-    gender-correct verb form together. The ranking/selection math above --
-    which features, in what order, by what magnitude -- is unchanged."""
+    Returns the raw feature key (e.g. "AGE") instead of a pre-resolved
+    label, so the caller can look up the Hebrew label and the
+    gender-correct verb form together."""
     transformed = preprocessor.transform(row)
     scaled = scaler.transform(transformed)[0]
     weights = classifier.coef_[0] if hasattr(classifier, "coef_") else classifier.feature_importances_
@@ -336,14 +321,14 @@ def _render_error(errors: list[str]) -> str:
 
 def _render_result(
     probability: float,
-    predicted_class: str,
     risk_level: str,
     factors: list[tuple[str, str]],
     action: str,
 ) -> str:
-    """Sprint 9C: presentation only -- probability, predicted_class, and
-    risk_level are passed in exactly as computed by predict()/classify_risk()
-    with no changes to their values or the thresholds that produced them."""
+    """Render the prediction result panel: predicted probability, risk
+    categorization band, and the business action from the operating policy.
+    No separate predicted-class label is shown, so the panel can never
+    display a class cutoff that contradicts the business action below it."""
     style = RISK_STYLES[risk_level]
     risk_level_he = RISK_LEVEL_LABELS_HE[risk_level]
     factor_items = "".join(
@@ -361,12 +346,7 @@ def _render_result(
       <div style="display:flex;gap:32px;flex-wrap:wrap;margin-bottom:16px;">
         <div>
           <div style="font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.04em;">
-            תחזית</div>
-          <div style="font-size:18px;font-weight:700;color:#1a1a1a;">{predicted_class}</div>
-        </div>
-        <div>
-          <div style="font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.04em;">
-            רמת סיכון</div>
+            קטגוריית סיכון</div>
           <div style="display:inline-block;margin-top:2px;padding:5px 14px;border-radius:999px;
                       font-weight:700;font-size:15px;color:{style['color']};
                       background:{style['background']};">{risk_level_he}</div>
@@ -436,27 +416,23 @@ def predict(
         columns=MODEL_FEATURES,
     )
 
-    # Inference only -- predict_proba on an already-fitted pipeline. The
-    # >= CLASSIFICATION_THRESHOLD comparison is byte-identical to before the
-    # Sprint 9C UX cleanup; only the resulting Hebrew display string changed.
+    # Inference only -- predict_proba on an already-fitted pipeline.
     probability = float(pipeline.predict_proba(row)[0, 1])
-    predicted_class = "צפויה תביעה" if probability >= CLASSIFICATION_THRESHOLD else "לא צפויה תביעה"
     risk_level = classify_risk(probability)
     factors = top_factors(row)
     action = business_action(probability, load_business_policy())
 
-    return _render_result(probability, predicted_class, risk_level, factors, action)
+    return _render_result(probability, risk_level, factors, action)
 
 
 # ======================================================================
 # Interface
 #
-# Sprint 9C UX cleanup: this section only changes visible text, labels, and
-# layout. Every input component still binds to the exact same `predict`
-# function with the exact same argument order as before; MODEL_ACCURACY and
-# MODEL_ROC_AUC are still read live from the metadata file (not hardcoded);
-# AGE_CHOICES/EXPERIENCE_CHOICES/VEHICLE_YEAR_CHOICES/OWNERSHIP_CHOICES are
-# still the model's own fitted category values, untouched.
+# Every input component binds to the `predict` function above.
+# MODEL_ACCURACY, MODEL_ROC_AUC, and MODEL_TYPE are read live from the
+# metadata file (not hardcoded); AGE_CHOICES/EXPERIENCE_CHOICES/
+# VEHICLE_YEAR_CHOICES/OWNERSHIP_CHOICES are the model's own fitted
+# category values.
 # ======================================================================
 
 # Minimal RTL styling: the underlying Gradio layout structure is unchanged
@@ -479,7 +455,7 @@ with gr.Blocks(title="AutoGuard AI V2 - חיזוי סיכון תביעת ביט�
             f"""
 | | |
 |---|---|
-| **מודל** | רגרסיה לוגיסטית |
+| **מודל** | {MODEL_TYPE_LABELS_HE.get(MODEL_TYPE, MODEL_TYPE)} |
 | **דיוק** | {MODEL_ACCURACY:.3f} |
 | **ROC-AUC** | {MODEL_ROC_AUC:.3f} |
 | **מספר משתנים** | {len(MODEL_FEATURES)} |
@@ -501,10 +477,10 @@ with gr.Blocks(title="AutoGuard AI V2 - חיזוי סיכון תביעת ביט�
             )
         with gr.Column():
             gr.Markdown("**היסטוריית נהיגה**")
-            # No client-side `minimum=` here: it proved to be a cosmetic-only
-            # hint (Sprint 6 acceptance review) that did not stop an
-            # out-of-range value from being scored. `validate_inputs()`
-            # above is the real, server-side enforcement for these fields.
+            # No client-side `minimum=` here: it is a cosmetic-only hint that
+            # does not stop an out-of-range value from being scored.
+            # `validate_inputs()` above is the real, server-side enforcement
+            # for these fields.
             accidents_input = gr.Number(
                 value=DEFAULT_PROFILE[2], precision=0, label=FEATURE_DISPLAY_HE["PAST_ACCIDENTS"]["label"]
             )

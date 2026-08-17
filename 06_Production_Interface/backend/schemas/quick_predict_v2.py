@@ -1,9 +1,7 @@
-"""Schemas for the Sprint 10.7 V2 quick-predict orchestration endpoint.
+"""Schemas for the V2 quick-predict orchestration endpoint.
 
-This is the serving contract for the AutoGuard AI V2 production model
-(``models/model_v2.pkl``, frozen in Sprint 10.6). It is intentionally
-separate from ``backend.schemas.quick_predict`` (the V1/legacy contract) so
-that V1 remains untouched and available in archive/legacy mode.
+This is the serving contract for the AutoGuard AI production model
+(``model_v2.pkl``).
 """
 
 from __future__ import annotations
@@ -18,9 +16,9 @@ VehicleOwnership = Literal["private", "leasing", "company"]
 class QuickPredictV2Request(BaseModel):
     """Request body for the V2 plate-assisted quick-predict flow.
 
-    ``vehicle_ownership`` has no default — Sprint 10.3.1 established that
-    ownership is one of the model's strongest features and must never be
-    silently guessed, so it is a required field with no fallback value.
+    ``vehicle_ownership`` has no default — it is one of the model's
+    strongest features and must never be silently guessed, so it is a
+    required field with no fallback value.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -86,7 +84,7 @@ class QuickPredictV2RiskDriver(BaseModel):
 
 
 class QuickPredictV2PremiumImpact(BaseModel):
-    """Business-layer premium impact block (display only), reused from V1's estimator."""
+    """Business-layer premium impact block (display only)."""
 
     model_config = ConfigDict(extra="forbid")
 

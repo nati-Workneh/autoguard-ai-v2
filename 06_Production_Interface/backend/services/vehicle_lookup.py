@@ -18,11 +18,11 @@ DISPLAY_ONLY_API_FIELDS = ("manufacturer", "commercial_model")
 MODEL_APPROVED_API_FIELDS = ("production_year",)
 PLATE_DIGIT_LENGTHS = {7, 8}
 
-# Sprint 9B resilience: a live acceptance test observed one real HTTP 504
-# from this exact upstream call. Bounded, not indefinite -- 1 retry after a
-# short fixed backoff, only for transport-level failures (timeout / HTTP
-# error / unparseable response), never for a legitimate "not found" or an
-# invalid plate, and never fabricating a result on final failure.
+# Bounded, not indefinite -- 1 retry after a short fixed backoff, only for
+# transport-level failures (timeout / HTTP error / unparseable response),
+# never for a legitimate "not found" or an invalid plate, and never
+# fabricating a result on final failure. The upstream registry API is known
+# to occasionally return a transient error, which this retry absorbs.
 REGISTRY_MAX_ATTEMPTS = 2
 REGISTRY_RETRY_BACKOFF_SECONDS = 0.5
 

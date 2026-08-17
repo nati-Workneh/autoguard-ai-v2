@@ -1,4 +1,4 @@
-"""Schemas for the Sprint 8.5 vehicle lookup layer."""
+"""Schemas for the vehicle lookup layer."""
 
 from __future__ import annotations
 

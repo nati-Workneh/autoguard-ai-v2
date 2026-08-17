@@ -70,10 +70,8 @@ _RECOMMENDATIONS = {
     "High": "Manual underwriting review",
 }
 
-# Hebrew-ready explanation templates per feature, keyed by the post-
-# preprocessing column name (see model_v2_metadata.json
-# "feature_order_post_preprocessing"). Mirrors the narrative validated in
-# Sprint 10.6 model_explainability.md.
+# Explanation templates per feature, keyed by the post-preprocessing column
+# name (see model_v2_metadata.json "feature_order_post_preprocessing").
 _FEATURE_TITLES: dict[str, str] = {
     "AGE": "Driver age bracket",
     "DRIVING_EXPERIENCE": "Driving experience",

@@ -1,11 +1,11 @@
-"""Sprint 10.0 business-layer premium impact estimator.
+"""Business-layer premium impact estimator.
 
-This is a pure post-processing display layer over the frozen model's
-existing outputs (`claim_probability`, `risk_level`, and the already-frozen
-risk-band cutoffs). It does not touch the model, the predictor, the
-preprocessing contract, or the risk-band thresholds themselves — it only
-translates an already-computed risk level into a business-facing premium
-range for display.
+This is a pure post-processing display layer over the model's existing
+outputs (`claim_probability`, `risk_level`, and the fixed risk-band
+cutoffs). It does not touch the model, the predictor, the preprocessing
+contract, or the risk-band thresholds themselves — it only translates an
+already-computed risk level into a business-facing premium range for
+display.
 """
 
 from __future__ import annotations
