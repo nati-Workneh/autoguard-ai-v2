@@ -1,0 +1,21 @@
+# Keep the Vercel upload scoped to what api/index.py actually needs.
+# (vercel.json's includeFiles then pulls in the specific 01_ML_Model and
+# 06_Production_Interface files the function requires.)
+02_Data/
+01_ML_Model/AutoGuard_AI_Final_ML_Pipeline.ipynb
+01_ML_Model/figures/
+03_AI_Agents/
+04_Report/
+05_Gradio_Interface/
+07_Economic_Model/
+06_Production_Interface/backend/tests/
+06_Production_Interface/.pytest_cache/
+06_Production_Interface/backend/__pycache__/
+06_Production_Interface/backend/schemas/__pycache__/
+06_Production_Interface/backend/services/__pycache__/
+.claude/
+.git/
+.pytest_cache/
+__pycache__/
+.ipynb_checkpoints/
+.venv/
