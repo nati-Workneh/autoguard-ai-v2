@@ -1,11 +1,8 @@
 {
   "functions": {
-    "api/index.py": {
-      "includeFiles": "{01_ML_Model/model_v2.pkl,01_ML_Model/model_v2_metadata.json,01_ML_Model/pytorch_wrapper.py,06_Production_Interface/backend/**,06_Production_Interface/frontend/**}",
+    "06_Production_Interface/backend/main.py": {
+      "includeFiles": "{01_ML_Model/model_v2.pkl,01_ML_Model/model_v2_metadata.json,01_ML_Model/pytorch_wrapper.py}",
       "maxDuration": 30
     }
-  },
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
-  ]
+  }
 }

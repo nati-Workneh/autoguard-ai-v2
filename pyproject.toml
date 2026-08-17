@@ -1,0 +1,2 @@
+[tool.vercel]
+entrypoint = "06_Production_Interface/backend/main.py:app"

@@ -118,3 +118,5 @@ ui-ux-pro-max/
 tmp/
 temp/
 memory-game/
+.vercel
+.env*
