@@ -19,8 +19,11 @@ from backend.feature_builder_v2 import (
     InvalidOwnershipError,
     MissingVehicleLookupV2Error,
 )
+from backend.input_domain import FIELD_LABELS_HE
 from backend.predictor_v2 import ArtifactLoadErrorV2, AutoGuardPredictorV2
 from backend.schemas.quick_predict_v2 import (
+    QuickPredictV2DomainWarning,
+    QuickPredictV2DomainWarningField,
     QuickPredictV2Metadata,
     QuickPredictV2PremiumImpact,
     QuickPredictV2Prediction,
@@ -180,6 +183,29 @@ def quick_predict_v2(payload: QuickPredictV2Request) -> QuickPredictV2Response:
         annual_mileage=payload.annual_mileage,
         vehicle_ownership=payload.vehicle_ownership,
     )
+
+    domain_warning = None
+    if result.domain_warning_fields:
+        field_summaries = ", ".join(
+            f"{FIELD_LABELS_HE.get(f.field, f.field)}={f.value:g} (0-{f.supported_max:g})"
+            for f in result.domain_warning_fields
+        )
+        domain_warning = QuickPredictV2DomainWarning(
+            message=(
+                "One or more inputs fall outside the range the model was trained on "
+                f"({field_summaries}); treat this estimate as unreliable."
+            ),
+            fields=[
+                QuickPredictV2DomainWarningField(
+                    field=f.field,
+                    value=f.value,
+                    supported_min=f.supported_min,
+                    supported_max=f.supported_max,
+                )
+                for f in result.domain_warning_fields
+            ],
+        )
+
     return QuickPredictV2Response(
         vehicle=QuickPredictV2Vehicle(
             manufacturer=result.vehicle.manufacturer,
@@ -215,6 +241,7 @@ def quick_predict_v2(payload: QuickPredictV2Request) -> QuickPredictV2Response:
             model_name=result.prediction.model_name,
             prediction_timestamp=result.prediction.prediction_timestamp,
         ),
+        input_domain_warning=domain_warning,
     )
 
 

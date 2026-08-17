@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import logging
 
 from backend.feature_builder_v2 import DriverInputsV2, FeatureBuilderV2
+from backend.input_domain import OODField, check_out_of_distribution
 from backend.predictor_v2 import AutoGuardPredictorV2, PredictionResultV2
 from backend.services.premium_impact import PremiumImpactEstimate, estimate_premium_impact
 from backend.services.vehicle_lookup import VehicleLookupRecord, VehicleLookupService
@@ -22,6 +23,7 @@ class QuickPredictV2Result:
     vehicle_year_category: str
     prediction: PredictionResultV2
     premium_impact: PremiumImpactEstimate
+    domain_warning_fields: list[OODField]
 
 
 class QuickPredictServiceV2:
@@ -53,6 +55,21 @@ class QuickPredictServiceV2:
         """Run the full V2 quick-predict flow against model_v2.pkl."""
 
         logger.info("quick_predict_v2.started plate=%s", self._mask_license_plate(license_plate))
+
+        # Detection only -- never changes which prediction runs or what it returns.
+        # See backend/input_domain.py for why extreme values need flagging rather
+        # than being trusted as ordinary inputs to a Random Forest.
+        domain_warning_fields = check_out_of_distribution(
+            past_accidents=past_accidents,
+            speeding_violations=speeding_violations,
+            duis=duis,
+        )
+        if domain_warning_fields:
+            logger.warning(
+                "quick_predict_v2.out_of_distribution plate=%s fields=%s",
+                self._mask_license_plate(license_plate),
+                [f.field for f in domain_warning_fields],
+            )
 
         try:
             vehicle_record = self.vehicle_lookup_service.lookup_vehicle(license_plate)
@@ -114,6 +131,7 @@ class QuickPredictServiceV2:
             vehicle_year_category=vehicle_year_category,
             prediction=prediction,
             premium_impact=premium_impact,
+            domain_warning_fields=domain_warning_fields,
         )
 
     @staticmethod

@@ -56,6 +56,18 @@ python 07_Economic_Model/economic_model.py
 
 The production UI is served at `http://127.0.0.1:8000`; the active health endpoint is `/api/v2/health`.
 
+## Model Input Domain
+
+The production interface and Gradio demo validate three numerical inputs (past accidents, speeding violations, DUIs) against the range represented in the model's training dataset. Tree-based models like Random Forest do not reliably extrapolate beyond their fitted split regions, so inputs outside that range are not treated as ordinary predictions: the model's real, unmodified probability is still shown, alongside a clear warning that the estimate falls outside the model's supported domain and the case should be routed to manual review.
+
+| Field | Supported range |
+|---|---|
+| Past accidents | 0-15 |
+| Speeding violations | 0-22 |
+| DUIs | 0-6 |
+
+See `06_Production_Interface/backend/input_domain.py` for the single source of truth these ranges are drawn from.
+
 ## Reproducibility
 
 Every run is seeded (`SEED = 42`, applied to Python, NumPy, PyTorch, and every scikit-learn estimator). Re-running the notebook regenerates `model_v2.pkl` and `model_v2_metadata.json` from the same 50,000-row dataset; the Gradio app, production backend, and economic model all read those two files directly, so re-running the notebook is the single step needed to refresh every downstream number in this repository.

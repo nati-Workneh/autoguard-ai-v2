@@ -35,6 +35,7 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "06_Production_Interface"))
 from backend.business_policy import business_action, load_business_policy
+from backend.input_domain import FIELD_LABELS_HE, check_out_of_distribution
 MODEL_PATH = PROJECT_ROOT / "01_ML_Model" / "model_v2.pkl"
 METADATA_PATH = PROJECT_ROOT / "01_ML_Model" / "model_v2_metadata.json"
 
@@ -319,23 +320,57 @@ def _render_error(errors: list[str]) -> str:
     """
 
 
+def _render_domain_warning(domain_warning_fields: list) -> str:
+    """A prominent banner shown ABOVE the prediction when one or more inputs
+    are out-of-distribution (OOD) -- outside the range the model was trained
+    on. This never changes or hides the prediction below it: a Random
+    Forest's fitted split regions do not reliably extrapolate past the
+    training range, so the estimate is flagged as unreliable rather than
+    silently trusted, without altering the model's own predict_proba() output."""
+    items = "".join(
+        f"<li>{FIELD_LABELS_HE.get(f.field, f.field)}: הוזן {f.value:g} "
+        f"(טווח נתמך: {f.supported_min:g}-{f.supported_max:g})</li>"
+        for f in domain_warning_fields
+    )
+    return f"""
+    <div dir="rtl" style="border:1px solid #f5c257;border-radius:14px;padding:18px 22px;
+                margin-bottom:14px;font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+                background:#fff8e6;text-align:right;">
+      <div style="font-size:14px;color:#8a5a00;font-weight:700;">
+        ⚠ הנתונים מחוץ לטווח הנתמך</div>
+      <div style="font-size:13px;color:#6b4a00;margin-top:6px;">
+        חלק מהנתונים שהוזנו נמצאים מחוץ לטווח שעליו אומן המודל, ולכן ההסתברות המוצגת
+        למטה עלולה להיות לא אמינה. מומלץ להעביר את הבקשה לבדיקה ידנית.
+      </div>
+      <ul style="margin:8px 0 0 0;padding-inline-start:20px;font-size:13px;color:#6b4a00;line-height:1.6;">
+        {items}
+      </ul>
+    </div>
+    """
+
+
 def _render_result(
     probability: float,
     risk_level: str,
     factors: list[tuple[str, str]],
     action: str,
+    domain_warning_fields: list | None = None,
 ) -> str:
     """Render the prediction result panel: predicted probability, risk
     categorization band, and the business action from the operating policy.
     No separate predicted-class label is shown, so the panel can never
-    display a class cutoff that contradicts the business action below it."""
+    display a class cutoff that contradicts the business action below it.
+    If domain_warning_fields is non-empty, an OOD warning banner is prepended
+    above the (still real, unmodified) prediction -- see _render_domain_warning."""
     style = RISK_STYLES[risk_level]
     risk_level_he = RISK_LEVEL_LABELS_HE[risk_level]
     factor_items = "".join(
         f"<li><strong>{FEATURE_DISPLAY_HE[feature]['label']}</strong> — {FEATURE_DISPLAY_HE[feature][direction]}</li>"
         for feature, direction in factors
     )
+    warning_html = _render_domain_warning(domain_warning_fields) if domain_warning_fields else ""
     return f"""
+    {warning_html}
     <div dir="rtl" style="border:1px solid #e2e2e2;border-radius:14px;padding:22px 26px;
                 font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#fafafa;text-align:right;">
       <div style="font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.04em;">
@@ -416,13 +451,20 @@ def predict(
         columns=MODEL_FEATURES,
     )
 
+    # Detection only -- never changes which prediction runs or what it returns.
+    domain_warning_fields = check_out_of_distribution(
+        past_accidents=int(past_accidents),
+        speeding_violations=int(speeding_violations),
+        duis=int(duis),
+    )
+
     # Inference only -- predict_proba on an already-fitted pipeline.
     probability = float(pipeline.predict_proba(row)[0, 1])
     risk_level = classify_risk(probability)
     factors = top_factors(row)
     action = business_action(probability, load_business_policy())
 
-    return _render_result(probability, risk_level, factors, action)
+    return _render_result(probability, risk_level, factors, action, domain_warning_fields)
 
 
 # ======================================================================

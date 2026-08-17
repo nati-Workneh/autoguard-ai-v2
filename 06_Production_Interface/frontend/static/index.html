@@ -210,7 +210,7 @@
                       required
                       aria-describedby="past-accidents-help"
                     />
-                    <p id="past-accidents-help" class="field-help">מספר התאונות בעבר.</p>
+                    <p id="past-accidents-help" class="field-help">מספר התאונות בעבר. טווח נתמך למודל: 0-15.</p>
                   </div>
 
                   <div class="field">
@@ -230,7 +230,7 @@
                       required
                       aria-describedby="speeding-violations-help"
                     />
-                    <p id="speeding-violations-help" class="field-help">מספר דוחות החריגה במהירות.</p>
+                    <p id="speeding-violations-help" class="field-help">מספר דוחות החריגה במהירות. טווח נתמך למודל: 0-22.</p>
                   </div>
 
                   <div class="field">
@@ -250,7 +250,7 @@
                       required
                       aria-describedby="duis-help"
                     />
-                    <p id="duis-help" class="field-help">עבירות נהיגה בשכרות (DUI).</p>
+                    <p id="duis-help" class="field-help">עבירות נהיגה בשכרות (DUI). טווח נתמך למודל: 0-6.</p>
                   </div>
 
                   <div class="field field-wide">
@@ -335,6 +335,14 @@
         </section>
 
         <section id="result-dashboard" hidden>
+          <div id="ood-warning-banner" class="banner banner-warning" hidden role="alert">
+            <div>⚠ הנתונים מחוץ לטווח הנתמך</div>
+            <p style="font-weight:400;font-size:0.85rem;margin:6px 0 0 0;">
+              חלק מהנתונים שהוזנו נמצאים מחוץ לטווח שעליו אומן המודל, ולכן ההערכה
+              המוצגת למטה עלולה להיות לא אמינה. מומלץ להעביר את הבקשה לבדיקה ידנית.
+            </p>
+            <ul id="ood-warning-fields"></ul>
+          </div>
           <div class="results-grid">
             <article class="panel vehicle-card result-span-full" aria-labelledby="vehicle-card-title">
               <div class="card-heading-row" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">

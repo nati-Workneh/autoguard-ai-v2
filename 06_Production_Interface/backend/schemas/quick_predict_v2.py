@@ -105,6 +105,32 @@ class QuickPredictV2Metadata(BaseModel):
     prediction_timestamp: str = Field(min_length=1)
 
 
+class QuickPredictV2DomainWarningField(BaseModel):
+    """One numeric input that fell outside the model's trained range."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    field: str = Field(min_length=1)
+    value: float
+    supported_min: float
+    supported_max: float
+
+
+class QuickPredictV2DomainWarning(BaseModel):
+    """Present only when one or more inputs are out-of-distribution (OOD).
+
+    The prediction above is still the model's real, unmodified output --
+    this block only flags that it falls outside the range the model was
+    trained on, so it should not be trusted as an ordinary reliable estimate.
+    """
+
+    model_config = ConfigDict(extra="forbid")
+
+    message: str = Field(min_length=1)
+    fields: list[QuickPredictV2DomainWarningField]
+    recommended_action: Literal["manual_review"] = "manual_review"
+
+
 class QuickPredictV2Response(BaseModel):
     """Full orchestration response contract for V2 quick-predict."""
 
@@ -115,3 +141,4 @@ class QuickPredictV2Response(BaseModel):
     premium_impact: QuickPredictV2PremiumImpact
     top_risk_drivers: list[QuickPredictV2RiskDriver]
     metadata: QuickPredictV2Metadata
+    input_domain_warning: QuickPredictV2DomainWarning | None = None

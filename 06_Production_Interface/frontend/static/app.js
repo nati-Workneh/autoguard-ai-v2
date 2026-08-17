@@ -12,6 +12,8 @@ const analyzeButton = document.getElementById("analyze-button");
 const clearButton = document.getElementById("clear-button");
 const resultEmptyEl = document.getElementById("result-empty");
 const resultDashboardEl = document.getElementById("result-dashboard");
+const oodWarningBannerEl = document.getElementById("ood-warning-banner");
+const oodWarningFieldsEl = document.getElementById("ood-warning-fields");
 const technicalDetailsEl = document.getElementById("technical-details");
 const vehiclePlateEl = document.getElementById("vehicle-plate");
 const vehicleTitleEl = document.getElementById("vehicle-title");
@@ -281,6 +283,7 @@ function resetDashboard() {
   predictionTimestampEl.textContent = "-";
   setRiskPresentation("Medium");
   renderRiskDrivers([]);
+  renderDomainWarning(null);
   setEmptyState(UI_TEXT.emptyTitle, UI_TEXT.emptyCopy);
 }
 
@@ -576,6 +579,25 @@ function setPremiumImpactPresentation(premiumImpact) {
   premiumImpactSummaryEl.classList.add(`premium-impact-${premiumImpact.direction}`);
 }
 
+/** Shows a warning banner above the (still real, unmodified) prediction when
+ * one or more inputs fall outside the model's trained range. Never hides or
+ * alters the probability/risk-band/business-action below it. */
+function renderDomainWarning(warning) {
+  if (!warning || !Array.isArray(warning.fields) || warning.fields.length === 0) {
+    oodWarningBannerEl.hidden = true;
+    oodWarningFieldsEl.innerHTML = "";
+    return;
+  }
+  oodWarningFieldsEl.innerHTML = "";
+  warning.fields.forEach((field) => {
+    const item = document.createElement("li");
+    const label = FIELD_LABELS[field.field] || field.field;
+    item.textContent = `${label}: הוזן ${field.value} (טווח נתמך: ${field.supported_min}-${field.supported_max})`;
+    oodWarningFieldsEl.appendChild(item);
+  });
+  oodWarningBannerEl.hidden = false;
+}
+
 function renderDashboard(payload, result) {
   const vehicle = result.vehicle || {};
   const prediction = result.prediction || {};
@@ -600,6 +622,7 @@ function renderDashboard(payload, result) {
     ? formatTimestamp(metadata.prediction_timestamp)
     : "-";
   renderRiskDrivers(result.top_risk_drivers);
+  renderDomainWarning(result.input_domain_warning);
 
   technicalDetailsEl.open = false;
   resultEmptyEl.hidden = true;
