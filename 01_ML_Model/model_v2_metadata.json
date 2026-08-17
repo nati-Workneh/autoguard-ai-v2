@@ -3,7 +3,7 @@
   "model_type": "Random Forest",
   "model_family": "RandomForestClassifier",
   "version": "v5.0.0",
-  "training_date": "2026-08-17T09:08:07.148569+00:00",
+  "training_date": "2026-08-17T13:44:56.368503+00:00",
   "dataset": {
     "source_file": "Car_Insurance_Claim_50000_FINAL.csv",
     "total_rows": 50000
@@ -312,8 +312,8 @@
     "precision": 0.7131251586697132,
     "recall": 0.8965847430577721,
     "f1": 0.7944004524886877,
-    "roc_auc": 0.93495849228189,
-    "pr_auc": 0.8562176284930556
+    "roc_auc": 0.9349584922818901,
+    "pr_auc": 0.856217731068526
   },
   "bootstrap_confidence_intervals_95pct": {
     "accuracy": [
@@ -333,12 +333,12 @@
       0.8053597223588518
     ],
     "roc_auc": [
-      0.9304113381352984,
-      0.9394131265004532
+      0.9304113381352985,
+      0.9394131265004533
     ],
     "pr_auc": [
-      0.8449693469913571,
-      0.8682401483467923
+      0.8449694703545874,
+      0.8682402886474997
     ]
   },
   "feature_importance": {

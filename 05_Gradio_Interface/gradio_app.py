@@ -183,18 +183,18 @@ FEATURE_DISPLAY_HE: dict[str, dict[str, str]] = {
 # Demo profiles for the three quick-load buttons. Each was checked against
 # the loaded pipeline (not guessed) to confirm it actually lands in the
 # intended risk band before being wired into the UI:
-#   Low    -> ~0.1% predicted claim probability
-#   Medium -> ~52.6%
-#   High   -> ~96.2%
+#   Low    -> ~23.0% predicted claim probability
+#   Medium -> ~51.0%
+#   High   -> ~91.4%
 LOW_RISK_EXAMPLE = ("65+", "30y+", 0, 0, 0, 6000, "Owns the vehicle", "after 2015")
-MEDIUM_RISK_EXAMPLE = ("40-64", "10-19y", 0, 0, 0, 12000, "Does not own", "before 2015")
+MEDIUM_RISK_EXAMPLE = ("40-64", "10-19y", 0, 1, 0, 12000, "Does not own", "before 2015")
 HIGH_RISK_EXAMPLE = ("16-25", "0-9y", 2, 5, 1, 18000, "Does not own", "before 2015")
 
 # Default profile shown on first load. Chosen only because it is an
 # unremarkable, middle-of-the-road driver profile (not because it lands in
-# any particular risk band) -- it scores ~18.3% / Low Risk. The model's own
+# any particular risk band) -- it scores ~24.6% / Low Risk. The model's own
 # youngest/least-experienced categories (16-25, 0-9y experience) score
-# ~60.4% / High Risk, which makes a confusing first impression for a demo,
+# ~67.8% / High Risk, which makes a confusing first impression for a demo,
 # so the form starts on a middle-of-the-road profile instead. No model,
 # threshold, or scoring logic changed to produce this -- only which of the
 # model's own valid categories the form starts on.
