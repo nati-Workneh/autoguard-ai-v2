@@ -361,7 +361,7 @@ def _render_result(
 
       <div style="padding-top:16px;border-top:1px solid #e2e2e2;">
         <div style="font-size:13px;color:#666;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;">
-          גורמים מרכזיים המשפיעים על התחזית</div>
+          אינדיקטורים מרכזיים לסיכון</div>
         <ul style="margin:0;padding-inline-start:20px;font-size:14px;color:#1a1a1a;line-height:1.7;">
           {factor_items}
         </ul>
