@@ -1,0 +1,29 @@
+# Data handling
+pandas==3.0.3
+numpy==2.4.4
+
+# Machine learning
+scikit-learn==1.9.0
+joblib==1.5.3
+torch==2.12.1
+
+# Visualization
+matplotlib==3.11.0
+seaborn==0.13.2
+
+# Notebook
+jupyter==1.1.1
+notebook==7.6.0
+nbconvert==7.17.1
+
+# Backend API
+fastapi==0.136.1
+uvicorn==0.46.0
+pydantic==2.13.3
+
+# Demo interface
+gradio==6.19.0
+
+# Testing
+pytest==9.0.3
+httpx==0.28.1

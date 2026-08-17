@@ -1,0 +1,365 @@
+{
+  "model_name": "AutoGuard AI Production Model",
+  "model_type": "Random Forest",
+  "model_family": "RandomForestClassifier",
+  "version": "v5.0.0",
+  "training_date": "2026-08-17T09:08:07.148569+00:00",
+  "dataset": {
+    "source_file": "Car_Insurance_Claim_50000_FINAL.csv",
+    "total_rows": 50000
+  },
+  "random_seed": 42,
+  "target": "OUTCOME",
+  "feature_list": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "ANNUAL_MILEAGE",
+    "VEHICLE_OWNERSHIP",
+    "VEHICLE_YEAR"
+  ],
+  "feature_order_post_preprocessing": [
+    "AGE",
+    "DRIVING_EXPERIENCE",
+    "VEHICLE_YEAR",
+    "ANNUAL_MILEAGE",
+    "PAST_ACCIDENTS",
+    "SPEEDING_VIOLATIONS",
+    "DUIS",
+    "VEHICLE_OWNERSHIP"
+  ],
+  "train_rows": 31999,
+  "validation_rows": 8000,
+  "test_rows": 10001,
+  "model_selection_dataset": "validation",
+  "final_evaluation_dataset": "test",
+  "selection_rule": "Highest Validation ROC-AUC; F1 breaks ties. Selected once, before Test is touched.",
+  "candidate_validation_results": [
+    {
+      "model": "Random Forest",
+      "accuracy": 0.854875,
+      "precision": 0.7459795321637427,
+      "recall": 0.8141204627044276,
+      "f1": 0.7785618920465383,
+      "roc_auc": 0.9323512225117931,
+      "pr_auc": 0.8524134177445464
+    },
+    {
+      "model": "Neural Network B (128-64, ReLU)",
+      "accuracy": 0.829375,
+      "precision": 0.7033475783475783,
+      "recall": 0.7877941763063422,
+      "f1": 0.7431796801505174,
+      "roc_auc": 0.9025320037810025,
+      "pr_auc": 0.8059934823041366
+    },
+    {
+      "model": "Neural Network C (128-64, LeakyReLU, Dropout 0.30)",
+      "accuracy": 0.830375,
+      "precision": 0.700208913649025,
+      "recall": 0.8021539688871161,
+      "f1": 0.7477226250232385,
+      "roc_auc": 0.8979294894012766,
+      "pr_auc": 0.8004458701049257
+    },
+    {
+      "model": "Neural Network A (64, ReLU)",
+      "accuracy": 0.830375,
+      "precision": 0.7084844089920233,
+      "recall": 0.7794176306342242,
+      "f1": 0.7422602089268756,
+      "roc_auc": 0.8960034060102312,
+      "pr_auc": 0.7974621303095586
+    },
+    {
+      "model": "Logistic Regression",
+      "accuracy": 0.82725,
+      "precision": 0.7082562014068864,
+      "recall": 0.7630634224172318,
+      "f1": 0.7346390168970814,
+      "roc_auc": 0.8932357685391518,
+      "pr_auc": 0.789858385909305
+    },
+    {
+      "model": "Baseline",
+      "accuracy": 0.686625,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "pr_auc": 0.313375
+    }
+  ],
+  "threshold_analysis": {
+    "method": "F1-maximizing sweep on Validation only",
+    "candidate_thresholds": [
+      {
+        "threshold": 0.05,
+        "accuracy": 0.746625,
+        "precision": 0.5539083557951483,
+        "recall": 0.9836457917830076,
+        "f1": 0.7087225176031039,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1986,
+        "false_negatives": 41
+      },
+      {
+        "threshold": 0.1,
+        "accuracy": 0.7885,
+        "precision": 0.6004932182490752,
+        "recall": 0.9712804148384523,
+        "f1": 0.7421517829929899,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1620,
+        "false_negatives": 72
+      },
+      {
+        "threshold": 0.15,
+        "accuracy": 0.813375,
+        "precision": 0.633843717001056,
+        "recall": 0.957718388512166,
+        "f1": 0.7628276409849086,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1387,
+        "false_negatives": 106
+      },
+      {
+        "threshold": 0.2,
+        "accuracy": 0.829125,
+        "precision": 0.6588628762541806,
+        "recall": 0.9429597128041484,
+        "f1": 0.7757178014766202,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1224,
+        "false_negatives": 143
+      },
+      {
+        "threshold": 0.25,
+        "accuracy": 0.83475,
+        "precision": 0.6723887110852488,
+        "recall": 0.9218189070602314,
+        "f1": 0.7775908479138627,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1126,
+        "false_negatives": 196
+      },
+      {
+        "threshold": 0.3,
+        "accuracy": 0.844375,
+        "precision": 0.6919099756690997,
+        "recall": 0.9074591144794575,
+        "f1": 0.7851596203623814,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 1013,
+        "false_negatives": 232
+      },
+      {
+        "threshold": 0.35,
+        "accuracy": 0.849,
+        "precision": 0.7050836754025892,
+        "recall": 0.8907060231352214,
+        "f1": 0.7870990482904476,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 934,
+        "false_negatives": 274
+      },
+      {
+        "threshold": 0.4,
+        "accuracy": 0.849625,
+        "precision": 0.7097812097812097,
+        "recall": 0.879936178699641,
+        "f1": 0.7857524487978629,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 902,
+        "false_negatives": 301
+      },
+      {
+        "threshold": 0.45,
+        "accuracy": 0.855125,
+        "precision": 0.7309801233721728,
+        "recall": 0.8508177104108496,
+        "f1": 0.7863594470046082,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 785,
+        "false_negatives": 374
+      },
+      {
+        "threshold": 0.5,
+        "accuracy": 0.854875,
+        "precision": 0.7459795321637427,
+        "recall": 0.8141204627044276,
+        "f1": 0.7785618920465383,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 695,
+        "false_negatives": 466
+      },
+      {
+        "threshold": 0.55,
+        "accuracy": 0.853,
+        "precision": 0.7706384709231395,
+        "recall": 0.7558835261268448,
+        "f1": 0.7631896898912606,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 564,
+        "false_negatives": 612
+      },
+      {
+        "threshold": 0.6,
+        "accuracy": 0.853125,
+        "precision": 0.7893136403127715,
+        "recall": 0.7247706422018348,
+        "f1": 0.7556664587232272,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 485,
+        "false_negatives": 690
+      },
+      {
+        "threshold": 0.65,
+        "accuracy": 0.845625,
+        "precision": 0.8199195171026157,
+        "recall": 0.6501794974072597,
+        "f1": 0.7252502780867631,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 358,
+        "false_negatives": 877
+      },
+      {
+        "threshold": 0.7,
+        "accuracy": 0.83275,
+        "precision": 0.8706404565630945,
+        "recall": 0.5476665337056242,
+        "f1": 0.6723800195886386,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 204,
+        "false_negatives": 1134
+      },
+      {
+        "threshold": 0.75,
+        "accuracy": 0.82525,
+        "precision": 0.8963545389563974,
+        "recall": 0.5001994415636218,
+        "f1": 0.642089093701997,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 145,
+        "false_negatives": 1253
+      },
+      {
+        "threshold": 0.8,
+        "accuracy": 0.82175,
+        "precision": 0.9135424636572304,
+        "recall": 0.4762664539289988,
+        "f1": 0.626114315679077,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 113,
+        "false_negatives": 1313
+      },
+      {
+        "threshold": 0.85,
+        "accuracy": 0.8125,
+        "precision": 0.9277824978759558,
+        "recall": 0.4355803749501396,
+        "f1": 0.5928338762214984,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 85,
+        "false_negatives": 1415
+      },
+      {
+        "threshold": 0.9,
+        "accuracy": 0.79075,
+        "precision": 0.9445037353255069,
+        "recall": 0.3530115676106901,
+        "f1": 0.5139372822299652,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 52,
+        "false_negatives": 1622
+      },
+      {
+        "threshold": 0.95,
+        "accuracy": 0.718,
+        "precision": 0.9530685920577617,
+        "recall": 0.10530514559234144,
+        "f1": 0.1896551724137931,
+        "roc_auc": 0.9323512225117931,
+        "pr_auc": 0.8524134177445464,
+        "false_positives": 13,
+        "false_negatives": 2243
+      }
+    ],
+    "selected_threshold": 0.35
+  },
+  "final_test_results": {
+    "accuracy": 0.8546145385461453,
+    "precision": 0.7131251586697132,
+    "recall": 0.8965847430577721,
+    "f1": 0.7944004524886877,
+    "roc_auc": 0.93495849228189,
+    "pr_auc": 0.8562176284930556
+  },
+  "bootstrap_confidence_intervals_95pct": {
+    "accuracy": [
+      0.8476127387261274,
+      0.8616163383661634
+    ],
+    "precision": [
+      0.6987934945890433,
+      0.7270562064705921
+    ],
+    "recall": [
+      0.8868364038108356,
+      0.907653856878126
+    ],
+    "f1": [
+      0.7845362373877598,
+      0.8053597223588518
+    ],
+    "roc_auc": [
+      0.9304113381352984,
+      0.9394131265004532
+    ],
+    "pr_auc": [
+      0.8449693469913571,
+      0.8682401483467923
+    ]
+  },
+  "feature_importance": {
+    "DRIVING_EXPERIENCE": 0.130297,
+    "VEHICLE_OWNERSHIP": 0.07994,
+    "VEHICLE_YEAR": 0.070526,
+    "ANNUAL_MILEAGE": 0.061299,
+    "SPEEDING_VIOLATIONS": 0.059003,
+    "AGE": 0.05426,
+    "PAST_ACCIDENTS": 0.044835,
+    "DUIS": 0.021151
+  },
+  "leakage_audit": [
+    "train/validation ID overlap: 0",
+    "train/test ID overlap: 0",
+    "validation/test ID overlap: 0",
+    "train/validation content-fingerprint overlap: 0",
+    "train/test content-fingerprint overlap: 0",
+    "validation/test content-fingerprint overlap: 0"
+  ],
+  "preprocessing": "ColumnTransformer(OrdinalEncoder on AGE/DRIVING_EXPERIENCE/VEHICLE_YEAR + SimpleImputer(median) on numeric) -> StandardScaler, fit on Train only, inside the exported Pipeline",
+  "artifact_path": "01_ML_Model/model_v2.pkl",
+  "artifact_sha256": "79e263ac072ffed3c0607f4b6b3044d89ac2b8a21418285fa7839cd352c86b01"
+}

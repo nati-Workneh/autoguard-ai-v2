@@ -1,0 +1,11 @@
+{
+  "policy_version": "v4.0.0",
+  "business_threshold": 0.1,
+  "validation_f1_threshold": 0.35,
+  "manual_review_required_at_or_above_business_threshold": true,
+  "human_review_required_for_high_risk": true,
+  "selection_dataset": "validation",
+  "selection_objective": "maximize_expected_annual_net_benefit",
+  "economic_model_version": "v4.0.0",
+  "source": "AutoGuard AI economic optimization"
+}

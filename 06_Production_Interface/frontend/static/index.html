@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoGuard AI | ביטוח חכם. מותאם לך.</title>
+    <link rel="icon" type="image/png" href="/assets/logo-192.png" />
+    <link rel="apple-touch-icon" href="/assets/logo-180.png" />
+    <link rel="preload" href="/assets/orange-car-driving.mp4" as="video" type="video/mp4" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@500;600;700;800;900&family=Assistant:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body class="app-is-gated">
+    <noscript>
+      <div class="noscript-banner">יש להפעיל JavaScript כדי להשתמש במערכת AutoGuard AI.</div>
+    </noscript>
+
+    <section id="landing-screen" class="landing-screen" aria-labelledby="landing-headline" aria-describedby="landing-subtitle">
+      <video
+        id="landing-video"
+        class="landing-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="/assets/logo-orange-suv.png"
+        aria-hidden="true"
+      >
+        <source src="/assets/orange-car-driving.mp4" type="video/mp4" />
+      </video>
+      <div class="landing-overlay" aria-hidden="true"></div>
+      <div class="landing-glow" aria-hidden="true"></div>
+
+      <div class="landing-content">
+        <img
+          class="landing-logo"
+          src="/assets/logo-orange-suv.png"
+          alt="AutoGuard AI"
+          width="320"
+          height="213"
+          fetchpriority="high"
+        />
+        <p class="landing-kicker">מערכת AI להערכת סיכון ביטוחי</p>
+        <h1 id="landing-headline" class="landing-headline">ביטוח חכם. מותאם לנהגים של היום.</h1>
+        <p id="landing-subtitle" class="landing-subtitle">
+          קבל הערכת סיכון ביטוחית חכמה, מבוססת בינה מלאכותית ונתוני רכב אמיתיים.
+        </p>
+        <button id="enter-app-button" class="landing-cta" type="button">כניסה למערכת</button>
+      </div>
+    </section>
+
+    <div id="app-shell" class="app-shell" inert aria-hidden="true">
+    <header class="navbar" aria-label="כותרת המערכת">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">
+          <img src="/assets/logo-192.png" alt="" width="46" height="46" />
+        </div>
+        <div class="brand-wordmark">
+          <h1>AutoGuard <span>AI</span></h1>
+          <p class="eyebrow">חיתום רכב חכם · מבוסס בינה מלאכותית</p>
+        </div>
+      </div>
+      <div class="navbar-meta">
+        <div id="health-chip" class="status-chip is-offline" role="status" aria-live="polite">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="health-label">טוען נתונים...</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="הערכת סיכון ביטוחי">
+        <div class="hero-shapes" aria-hidden="true">
+          <span class="hero-blob hero-blob-1"></span>
+          <span class="hero-blob hero-blob-2"></span>
+          <span class="hero-blob hero-blob-3"></span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-visual">
+            <div class="hero-graphic">
+              <img
+                class="hero-logo-image"
+                src="/assets/logo-192222.png"
+                alt="AutoGuard AI"
+                width="1536"
+                height="1024"
+                fetchpriority="high"
+              />
+            </div>
+
+            <div class="hero-copy">
+              <span class="hero-kicker">מערכת AI להערכת סיכון ביטוחי</span>
+              <h2 class="hero-headline">ביטוח חכם.<br /><span class="accent">מותאם לך.</span></h2>
+              <p class="hero-subhead">
+                בדיקת סיכון לרכב תוך שניות — שאלון קצר, איתור אוטומטי של פרטי הרכב, והערכה מבוססת בינה מלאכותית שמסייעת לקבל החלטת ביטוח מהירה ושקופה.
+              </p>
+              <div class="hero-trust-row">
+                <span class="hero-trust-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z" /></svg>
+                  מאובטח ופרטי
+                </span>
+                <span class="hero-trust-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7z" /></svg>
+                  תוצאה תוך שניות
+                </span>
+                <span class="hero-trust-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2 4-4" /></svg>
+                  מבוסס בינה מלאכותית
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-form">
+            <section class="form-card panel" aria-labelledby="form-title">
+              <div class="panel-heading">
+                <div>
+                  <p class="section-kicker">קליטת בקשה · V2</p>
+                  <h2 id="form-title">בדיקת סיכון מהירה</h2>
+                </div>
+              </div>
+              <p class="section-copy" style="margin-bottom: 18px;">יש למלא את הפרטים הבאים לצורך ביצוע הערכת הסיכון. כל השדות הם שדות חובה.</p>
+
+              <div id="form-error" class="banner banner-error" role="alert" hidden></div>
+              <div id="form-status" class="banner banner-info" role="status" aria-live="polite" hidden></div>
+
+              <form id="quick-predict-form" novalidate>
+                <div class="field-grid">
+                  <div class="field field-wide">
+                    <label for="license_plate">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2" /><path d="M2 11h20" /></svg>
+                      מספר רכב
+                    </label>
+                    <input
+                      id="license_plate"
+                      name="license_plate"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="off"
+                      placeholder="1234567"
+                      maxlength="8"
+                      required
+                      aria-describedby="license-plate-help"
+                    />
+                    <p id="license-plate-help" class="field-help">הזן מספר רכב ישראלי תקין. שנת הייצור תשלף אוטומטית.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="age">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7" /></svg>
+                      גיל הנהג
+                    </label>
+                    <input
+                      id="age"
+                      name="age"
+                      type="number"
+                      min="18"
+                      max="100"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="34"
+                      required
+                      aria-describedby="age-help"
+                    />
+                    <p id="age-help" class="field-help">בין 18 ל-100.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="driving_experience_years">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3v18" stroke-linecap="round" /><circle cx="12" cy="12" r="9" /></svg>
+                      שנות נהיגה
+                    </label>
+                    <input
+                      id="driving_experience_years"
+                      name="driving_experience_years"
+                      type="number"
+                      min="0"
+                      max="80"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="10"
+                      required
+                      aria-describedby="driving-experience-help"
+                    />
+                    <p id="driving-experience-help" class="field-help">מספר שנות הנהיגה.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="past_accidents">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-4 8.5-9 10-5-1.5-9-5-9-10V6z" /><path d="M12 8v5M12 16h.01" /></svg>
+                      תאונות בעבר
+                    </label>
+                    <input
+                      id="past_accidents"
+                      name="past_accidents"
+                      type="number"
+                      min="0"
+                      max="50"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="0"
+                      required
+                      aria-describedby="past-accidents-help"
+                    />
+                    <p id="past-accidents-help" class="field-help">מספר התאונות בעבר.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="speeding_violations">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 13a7 7 0 10-14 0" /><path d="M12 13l4-4" stroke-linecap="round" /><path d="M5 19h14" /></svg>
+                      דוחות מהירות
+                    </label>
+                    <input
+                      id="speeding_violations"
+                      name="speeding_violations"
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="0"
+                      required
+                      aria-describedby="speeding-violations-help"
+                    />
+                    <p id="speeding-violations-help" class="field-help">מספר דוחות החריגה במהירות.</p>
+                  </div>
+
+                  <div class="field">
+                    <label for="duis">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2h8l1 4-2 14H9L7 6z" /><path d="M8 9h8" /></svg>
+                      עבירות שכרות
+                    </label>
+                    <input
+                      id="duis"
+                      name="duis"
+                      type="number"
+                      min="0"
+                      max="20"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="0"
+                      required
+                      aria-describedby="duis-help"
+                    />
+                    <p id="duis-help" class="field-help">עבירות נהיגה בשכרות (DUI).</p>
+                  </div>
+
+                  <div class="field field-wide">
+                    <label for="annual_mileage">
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
+                      קילומטראז' שנתי משוער
+                    </label>
+                    <input
+                      id="annual_mileage"
+                      name="annual_mileage"
+                      type="number"
+                      min="1"
+                      max="200000"
+                      step="1"
+                      inputmode="numeric"
+                      placeholder="15000"
+                      required
+                      aria-describedby="annual-mileage-help"
+                    />
+                    <p id="annual-mileage-help" class="field-help">מספר הקילומטרים המשוער בשנה.</p>
+                  </div>
+
+                  <fieldset class="field field-wide radio-fieldset" aria-describedby="vehicle-ownership-help">
+                    <legend>
+                      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7" /><path d="M5 10v10h14V10" /></svg>
+                      בעלות על הרכב
+                    </legend>
+                    <div class="radio-group" role="radiogroup" aria-required="true">
+                      <label class="radio-option">
+                        <input type="radio" name="vehicle_ownership" value="private" required />
+                        <span class="radio-control" aria-hidden="true"></span>
+                        <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7" /></svg>
+                        <span class="radio-label">בעלות פרטית</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="vehicle_ownership" value="leasing" />
+                        <span class="radio-control" aria-hidden="true"></span>
+                        <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg>
+                        <span class="radio-label">ליסינג</span>
+                      </label>
+                      <label class="radio-option">
+                        <input type="radio" name="vehicle_ownership" value="company" />
+                        <span class="radio-control" aria-hidden="true"></span>
+                        <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="1" /><path d="M9 21v-4h6v4M9 8h1M14 8h1M9 12h1M14 12h1" /></svg>
+                        <span class="radio-label">רכב חברה</span>
+                      </label>
+                    </div>
+                    <p id="vehicle-ownership-help" class="field-help">יש לבחור את סוג הבעלות על הרכב. שדה חובה.</p>
+                  </fieldset>
+                </div>
+
+                <div class="operational-note">
+                  <p class="note-title">הערת שימוש</p>
+                  <p class="note-copy">
+                    פרטי היצרן, הדגם ושנת הייצור נשלפים אוטומטית לאחר איתור מספר הרכב, ומשמשים לקביעת רמת הסיכון של הרכב במסגרת ההערכה (מודל AutoGuard AI V2).
+                  </p>
+                </div>
+
+                <div class="form-actions">
+                  <button id="analyze-button" class="primary-action" type="submit">בצע הערכת סיכון</button>
+                  <button id="clear-button" class="secondary-action" type="button">נקה טופס</button>
+                </div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="results-section fade-in-section" aria-labelledby="results-title">
+        <div class="results-intro">
+          <div>
+            <p class="section-kicker">תוצאות</p>
+            <h2 id="results-title">תוצאות הערכת הסיכון</h2>
+          </div>
+          <p class="section-copy">ציון סיכון, הסתברות לתביעה, השפעה משוערת על הפרמיה והגורמים המשפיעים על התוצאה.</p>
+        </div>
+
+        <section id="result-empty" class="panel empty-panel" aria-live="polite">
+          <div class="empty-icon" aria-hidden="true"><img src="/assets/logo-192.png" alt="" width="32" height="32" loading="lazy" decoding="async" /></div>
+          <h3 class="empty-title">המערכת מוכנה לביצוע הערכת סיכון</h3>
+          <p class="empty-copy">יש להזין מספר רכב ולהשלים את שאלון הנהג כדי להפיק הערכת סיכון.</p>
+        </section>
+
+        <section id="result-dashboard" hidden>
+          <div class="results-grid">
+            <article class="panel vehicle-card result-span-full" aria-labelledby="vehicle-card-title">
+              <div class="card-heading-row" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <div class="card-icon-row" style="margin-bottom:0;">
+                  <span class="card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l2-5a3 3 0 0 1 3-2h8a3 3 0 0 1 3 2l2 5" /><rect x="2" y="13" width="20" height="6" rx="2" /><circle cx="7" cy="19" r="1.5" /><circle cx="17" cy="19" r="1.5" /></svg>
+                  </span>
+                  <h3 id="vehicle-card-title" style="font-size:1.05rem;">פרטי הרכב</h3>
+                </div>
+                <div id="vehicle-plate" class="plate-pill">ממתין למספר רכב</div>
+              </div>
+
+              <div class="vehicle-summary">
+                <div>
+                  <p class="section-copy">יצרן ודגם מסחרי כפי שהתקבלו ממאגר הרכב</p>
+                  <p id="vehicle-title" class="vehicle-title">פרטי הרכב יוצגו לאחר האיתור</p>
+                </div>
+
+                <div class="vehicle-year-card">
+                  <span>שנת ייצור</span>
+                  <strong id="vehicle-year-detail">-</strong>
+                </div>
+              </div>
+
+              <dl class="vehicle-details">
+                <div>
+                  <dt>יצרן</dt>
+                  <dd id="vehicle-manufacturer">-</dd>
+                </div>
+                <div>
+                  <dt>דגם</dt>
+                  <dd id="vehicle-commercial-model">-</dd>
+                </div>
+                <div>
+                  <dt>שנת ייצור</dt>
+                  <dd id="vehicle-production-year">-</dd>
+                </div>
+              </dl>
+            </article>
+
+            <article class="panel kpi-card" aria-labelledby="claim-probability-title">
+              <div class="card-icon-row" style="justify-content:center;">
+                <span class="card-icon is-gold" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>
+                </span>
+              </div>
+              <h3 id="claim-probability-title" style="font-size:1.05rem;">הסתברות להגשת תביעה</h3>
+              <p id="claim-probability" class="kpi-value">0%</p>
+              <div class="risk-score-row">
+                <span class="risk-score-value" id="risk-score">0</span>
+                <span class="risk-score-max">/100 ציון סיכון</span>
+              </div>
+            </article>
+
+            <article class="panel risk-card" aria-labelledby="risk-level-title">
+              <div class="card-icon-row">
+                <span class="card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z" /></svg>
+                </span>
+                <h3 id="risk-level-title" style="font-size:1.05rem;">רמת הסיכון הביטוחי</h3>
+              </div>
+              <div id="risk-badge" class="risk-badge risk-medium">
+                <span class="risk-dot" aria-hidden="true"></span>
+                <span id="risk-level">סיכון בינוני</span>
+              </div>
+              <p id="risk-copy" class="driver-detail" style="margin-top:10px;">
+                הפרופיל שנבחן מצביע על צורך במסלול בדיקה חיתומית ברמת עדיפות בינונית.
+              </p>
+            </article>
+
+            <article class="panel recommendation-card result-span-full" aria-labelledby="recommendation-title">
+              <div class="card-icon-row">
+                <span class="card-icon is-blue" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2 4-4" /></svg>
+                </span>
+                <h3 id="recommendation-title" style="font-size:1.05rem;">המלצת המערכת</h3>
+              </div>
+              <p id="recommendation" class="recommendation-value">מומלץ להעברה לבדיקת חתם</p>
+              <p class="driver-detail">ההמלצה מסייעת לתעדוף בדיקת התיק ואינה מחליפה החלטת חתם.</p>
+            </article>
+
+            <article class="panel premium-impact-card result-span-full" aria-labelledby="premium-impact-title">
+              <div class="card-icon-row">
+                <span class="card-icon is-gold" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8" /><path d="M12 8v8M9 10.5c0-1.5 1.5-2 3-2s3 .8 3 2c0 1.6-2 1.8-3 2.3-1.3.5-3 1-3 2.7 0 1.2 1.5 2 3 2s3-.5 3-2" /></svg>
+                </span>
+                <h3 id="premium-impact-title" style="font-size:1.05rem;">השפעה משוערת על הפרמיה</h3>
+              </div>
+              <p id="premium-impact-summary" class="premium-impact-value">פרמיה סטנדרטית, ללא שינוי משוער</p>
+              <p class="driver-detail">אומדן עסקי בלבד, מבוסס על רמת הסיכון, ואינו מחליף תמחור ביטוחי רשמי.</p>
+            </article>
+
+            <article class="panel drivers-card result-span-full" aria-labelledby="drivers-title">
+              <div class="card-icon-row">
+                <span class="card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V10M11 19V4M18 19v-7" /></svg>
+                </span>
+                <h3 id="drivers-title" style="font-size:1.05rem;">הגורמים המשפיעים על התוצאה</h3>
+              </div>
+              <ul id="top-risk-drivers" class="driver-list"></ul>
+            </article>
+
+            <article class="panel technical-card result-span-full" aria-labelledby="technical-title">
+              <details id="technical-details">
+                <summary>
+                  <span id="technical-title">מידע נוסף</span>
+                </summary>
+                <dl class="technical-list">
+                  <div>
+                    <dt>גרסת מערכת</dt>
+                    <dd id="model-version">-</dd>
+                  </div>
+                  <div>
+                    <dt>זמן הפקת התוצאה</dt>
+                    <dd id="prediction-timestamp">-</dd>
+                  </div>
+                </dl>
+              </details>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img src="/assets/logo-192.png" alt="AutoGuard AI" loading="lazy" decoding="async" />
+          <strong>AutoGuard AI</strong>
+        </div>
+        <p class="footer-disclaimer">
+          המערכת מסייעת להערכת סיכון ראשונית ותומכת בהחלטת החתם, ללא החלפת שיקול דעת אנושי. © AutoGuard AI.
+        </p>
+      </div>
+    </footer>
+    </div>
+  </body>
+</html>
